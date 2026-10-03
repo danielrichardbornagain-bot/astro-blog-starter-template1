@@ -1,5 +1,6 @@
 {
 	"name": "astro-blog-starter-template1",
+	"account_id": "f7a53ffe65d1e81b7492569090b1582f",
 	"compatibility_date": "2025-10-08",
 	"compatibility_flags": ["nodejs_compat"],
 	"main": "./dist/_worker.js/index.js",
@@ -10,5 +11,11 @@
 	"observability": {
 		"enabled": true
 	},
-	"upload_source_maps": true
+	"upload_source_maps": true,
+	"routes": [
+		{
+			"pattern": "blog.custompcrepublic.com",
+			"custom_domain": true
+		}
+	]
 }

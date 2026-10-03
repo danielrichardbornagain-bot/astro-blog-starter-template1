@@ -1,4 +1,19 @@
-# Astro Starter Kit: Blog
+# Custom PC Republic Blog
+
+**Plug in. Play secure.** — the official blog for [Custom PC Republic](https://custompcrepublic.com), served at **https://blog.custompcrepublic.com** on Cloudflare Workers.
+
+- 🎨 Brand theme matching custompcrepublic.com (violet `#7c6cff` / blue `#3ba6ff` on `#07060e`; Syne, Outfit, IBM Plex Mono)
+- 📝 Blog posts in `src/content/blog/` (Markdown/MDX, optional `tags`)
+- 🏢 Company page at `/about`
+- 🌍 Featured open-source project page at `/zamesh` — contribute to [Zamesh](https://github.com/danielrichardbornagain-bot/zamesh)
+- 🔗 Site-wide brand data and links live in `src/consts.ts`
+- 🌐 `wrangler.json` binds the Worker to the `blog.custompcrepublic.com` custom domain on deploy
+
+Built from the Astro blog starter template (itself part of Zamesh).
+
+---
+
+## Template notes (Astro Starter Kit: Blog)
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/astro-blog-starter-template)
 

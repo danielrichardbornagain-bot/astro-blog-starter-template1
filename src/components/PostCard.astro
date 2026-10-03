@@ -1,0 +1,89 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+	featured?: boolean;
+}
+const { post, featured = false } = Astro.props;
+---
+
+<a class:list={['post-card', { featured }]} href={`/blog/${post.id}/`}>
+	{post.data.heroImage && <img width={720} height={360} src={post.data.heroImage} alt="" loading="lazy" />}
+	<div class="body">
+		<div class="meta">
+			<FormattedDate date={post.data.pubDate} />
+			{post.data.tags.slice(0, 2).map((t) => <span class="pill">#{t}</span>)}
+		</div>
+		<h3 class="title">{post.data.title}</h3>
+		<p class="desc">{post.data.description}</p>
+	</div>
+</a>
+<style>
+	.post-card {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		text-decoration: none;
+		color: var(--fg);
+		background: linear-gradient(180deg, var(--panel), var(--surface));
+		border: 1px solid var(--border);
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+	}
+	.post-card:hover {
+		color: var(--fg);
+		transform: translateY(-2px);
+		border-color: var(--primary);
+		box-shadow: var(--glow);
+	}
+	img {
+		width: 100%;
+		border-radius: 0;
+		display: block;
+		border-bottom: 1px solid var(--border);
+	}
+	.body {
+		padding: 1.1rem 1.25rem 1.4rem;
+	}
+	.meta {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+		align-items: center;
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		color: var(--muted);
+		margin-bottom: 0.5rem;
+	}
+	.title {
+		font-size: 1.35rem;
+		margin: 0 0 0.4rem;
+	}
+	.desc {
+		margin: 0;
+		color: var(--muted);
+		font-size: 0.95rem;
+		line-height: 1.55;
+	}
+	.featured .title {
+		font-size: 2rem;
+	}
+	@media (min-width: 860px) {
+		.featured {
+			flex-direction: row;
+		}
+		.featured img {
+			width: 58%;
+			border-bottom: none;
+			border-right: 1px solid var(--border);
+			object-fit: cover;
+		}
+		.featured .body {
+			align-self: center;
+			padding: 2rem;
+		}
+	}
+</style>

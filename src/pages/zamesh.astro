@@ -1,0 +1,267 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { ZAMESH } from '../consts';
+
+const starters = [
+	{ dir: 'astro-blog-starter-template', what: 'This very blog — Astro + MDX on Workers', tag: 'starter' },
+	{ dir: 'd1-template', what: 'Worker + D1 SQL database', tag: 'storage' },
+	{ dir: 'llm-chat-app-template', what: 'Chat app on Workers AI', tag: 'ai' },
+	{ dir: 'durable-chat-template', what: 'Real-time chat with Durable Objects', tag: 'realtime' },
+	{ dir: 'r2-explorer-template', what: 'Browse and manage R2 buckets', tag: 'storage' },
+	{ dir: 'workflows-starter-template', what: 'Durable multi-step Workflows', tag: 'starter' },
+	{ dir: 'openauth-template', what: 'Self-hosted auth with OpenAuth', tag: 'security' },
+	{ dir: 'saas-admin-template', what: 'SaaS admin dashboard on D1', tag: 'fullstack' },
+];
+
+const steps = [
+	{ n: '01', title: 'Fork & clone', body: 'Fork Zamesh on GitHub, then clone your fork.', code: `git clone ${ZAMESH.repo}.git\ncd zamesh\npnpm install` },
+	{ n: '02', title: 'Pick a template', body: 'Every folder ending in -template is its own Worker app.', code: 'cd d1-template\nnpm run dev' },
+	{ n: '03', title: 'Run the checks', body: 'Formatting, lint, lockfiles and template metadata are all covered.', code: 'pnpm run fix\npnpm run check' },
+	{ n: '04', title: 'Open a pull request', body: 'Fill in the PR checklist — it covers package.json, README and .gitignore rules.', code: 'git checkout -b fix/my-change\ngit push -u origin fix/my-change' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title="Zamesh · Contribute · Custom PC Republic"
+			description="Zamesh is Custom PC Republic's open-source collection of 36 Cloudflare Workers templates. Here's how to contribute."
+			image="/images/og-default.png"
+		/>
+		<style>
+			.hero {
+				padding: 2rem 0 1rem;
+				max-width: 820px;
+			}
+			.hero h1 {
+				font-size: clamp(2.5rem, 6vw, 4rem);
+			}
+			.hero p {
+				color: var(--muted);
+				font-size: 1.15rem;
+			}
+			.stats {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+				gap: 1rem;
+				margin: 2rem 0;
+			}
+			.stat {
+				padding: 1.1rem 1.25rem;
+				border-radius: var(--radius-md);
+				border: 1px solid var(--border);
+				background: var(--panel);
+			}
+			.stat b {
+				display: block;
+				font-family: var(--font-display);
+				font-size: 2rem;
+				line-height: 1.1;
+			}
+			.stat span {
+				font-family: var(--font-mono);
+				font-size: 0.75rem;
+				color: var(--muted);
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+			}
+			h2 {
+				font-size: 2rem;
+				margin-top: 3.5rem;
+			}
+			.ways {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+				gap: 1rem;
+			}
+			.ways .card {
+				border-left: 4px solid var(--accent);
+			}
+			.ways h3 {
+				font-size: 1.2rem;
+			}
+			.ways ul {
+				margin: 0;
+				padding-left: 1.1rem;
+				color: var(--muted);
+				font-size: 0.95rem;
+			}
+			.steps {
+				display: grid;
+				gap: 1.25rem;
+			}
+			.step {
+				display: grid;
+				grid-template-columns: 70px minmax(0, 1fr) minmax(0, 1.1fr);
+				gap: 1.25rem;
+				align-items: start;
+			}
+			.step .n {
+				font-family: var(--font-display);
+				font-size: 2.4rem;
+				font-weight: 800;
+				line-height: 1;
+				color: var(--primary);
+			}
+			.step h3 {
+				font-size: 1.25rem;
+				margin-bottom: 0.25rem;
+			}
+			.step p {
+				margin: 0;
+				color: var(--muted);
+			}
+			.step pre {
+				margin: 0;
+				white-space: pre-wrap;
+				overflow-wrap: anywhere;
+				font-size: 0.95rem;
+			}
+			.table-wrap {
+				overflow-x: auto;
+			}
+			table code {
+				font-size: 0.8em;
+			}
+			.tag {
+				font-family: var(--font-mono);
+				font-size: 0.75rem;
+				color: var(--blue);
+			}
+			.cta {
+				text-align: center;
+				margin-top: 3.5rem;
+				padding: 2.5rem 1.5rem;
+			}
+			.cta p {
+				color: var(--muted);
+			}
+			.cta .row {
+				display: flex;
+				gap: 0.75rem;
+				justify-content: center;
+				flex-wrap: wrap;
+			}
+			@media (max-width: 760px) {
+				.step {
+					grid-template-columns: minmax(0, 1fr);
+					gap: 0.5rem;
+				}
+				table {
+					font-size: 0.85rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="hero">
+				<span class="eyebrow">// Featured project · open source</span>
+				<h1><span class="gradient-text">Zamesh</span></h1>
+				<p>
+					<strong>Zamesh</strong> is Custom PC Republic's fork of
+					<a href={ZAMESH.upstream} target="_blank" rel="noopener">Cloudflare's Workers templates</a> — a
+					monorepo of <strong>full-stack starter apps</strong> we use to stage customer sites, labs and tools.
+					<u>This blog was built from one of them.</u> We want your help making them better.
+				</p>
+				<div style="display:flex;gap:.75rem;flex-wrap:wrap">
+					<a class="btn btn-primary" href={ZAMESH.repo} target="_blank" rel="noopener">Star &amp; fork on GitHub ↗</a>
+					<a class="btn" href={ZAMESH.issues} target="_blank" rel="noopener">Browse issues ↗</a>
+					<a class="btn" href={ZAMESH.contributing} target="_blank" rel="noopener">CONTRIBUTING.md ↗</a>
+				</div>
+			</section>
+
+			<div class="stats">
+				<div class="stat"><b>36</b><span>Workers templates</span></div>
+				<div class="stat"><b>pnpm</b><span>monorepo + turbo</span></div>
+				<div class="stat"><b>E2E</b><span>Playwright tests</span></div>
+				<div class="stat"><b>MIT</b><span>licensed</span></div>
+			</div>
+
+			<h2>Ways to contribute</h2>
+			<div class="ways">
+				<div class="card" style="--accent: var(--primary)">
+					<h3>🐛 Fix &amp; polish</h3>
+					<ul>
+						<li><strong>Bug fixes</strong> in any template</li>
+						<li>Dependency bumps &amp; lockfile hygiene</li>
+						<li>Clearer READMEs and screenshots</li>
+					</ul>
+				</div>
+				<div class="card" style="--accent: var(--blue)">
+					<h3>🧩 New templates</h3>
+					<ul>
+						<li>Combine <strong>D1, Workers AI, Queues</strong> or Durable Objects</li>
+						<li>Name the folder <code>*-template</code></li>
+						<li>Populate the <code>cloudflare</code> block in <code>package.json</code></li>
+					</ul>
+				</div>
+				<div class="card" style="--accent: var(--ok)">
+					<h3>🛡️ Security hardening</h3>
+					<ul>
+						<li><strong>Zero Trust</strong>-friendly defaults</li>
+						<li>Auth, headers &amp; secret handling</li>
+						<li>Our speciality — and where help counts most</li>
+					</ul>
+				</div>
+				<div class="card" style="--accent: var(--warn)">
+					<h3>🧪 Tests</h3>
+					<ul>
+						<li>Extend the <strong>Playwright</strong> E2E suite</li>
+						<li>Cover templates without specs</li>
+						<li>Make flaky tests robust</li>
+					</ul>
+				</div>
+			</div>
+
+			<h2>Your first pull request</h2>
+			<div class="steps">
+				{
+					steps.map((s) => (
+						<div class="step card">
+							<div class="n">{s.n}</div>
+							<div>
+								<h3>{s.title}</h3>
+								<p>{s.body}</p>
+							</div>
+							<pre><code>{s.code}</code></pre>
+						</div>
+					))
+				}
+			</div>
+
+			<h2>Good places to start</h2>
+			<div class="table-wrap"><table>
+				<thead>
+					<tr><th>Template</th><th>What it is</th><th>Area</th></tr>
+				</thead>
+				<tbody>
+					{
+						starters.map((t) => (
+							<tr>
+								<td><a href={`${ZAMESH.repo}/tree/main/${t.dir}`} target="_blank" rel="noopener"><code>{t.dir}</code></a></td>
+								<td>{t.what}</td>
+								<td class="tag">#{t.tag}</td>
+							</tr>
+						))
+					}
+				</tbody>
+			</table></div>
+
+			<div class="card cta">
+				<span class="eyebrow">// Plug in. Play secure. Ship open.</span>
+				<h2 style="margin-top:0">Ready to contribute?</h2>
+				<p>Fork the repo, pick a template, and open a PR — we review every one.</p>
+				<div class="row">
+					<a class="btn btn-primary" href={ZAMESH.repo} target="_blank" rel="noopener">Go to Zamesh ↗</a>
+					<a class="btn" href="/blog/contribute-to-zamesh/">Read the launch post</a>
+				</div>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>

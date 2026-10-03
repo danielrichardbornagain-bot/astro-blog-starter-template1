@@ -1,6 +1,6 @@
 {
 	"name": "astro-blog-starter-template1",
-	"description": "Build a personal website, blog, or portfolio with Astro.",
+	"description": "Custom PC Republic blog — builds, Zero Trust lab notes and the Zamesh open-source project, served at blog.custompcrepublic.com.",
 	"cloudflare": {
 		"label": "Astro Framework Starter",
 		"products": [

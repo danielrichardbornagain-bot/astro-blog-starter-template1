@@ -1,0 +1,50 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PostCard from '../../components/PostCard.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const [latest, ...rest] = posts;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Blog · ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<style>
+			.intro {
+				margin-bottom: 2.5rem;
+			}
+			.intro p {
+				color: var(--muted);
+				max-width: 640px;
+			}
+			.grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+				gap: 1.5rem;
+				margin-top: 1.5rem;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="intro">
+				<span class="eyebrow">// The Republic Blog</span>
+				<h1>Build logs, <span class="gradient-text">lab notes</span> &amp; open source</h1>
+				<p>Straight from the bench in Westdene — PC builds, Zero Trust homelab staging, and the Zamesh project.</p>
+			</section>
+			{latest && <PostCard post={latest} featured />}
+			<div class="grid">
+				{rest.map((post) => <PostCard post={post} />)}
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
