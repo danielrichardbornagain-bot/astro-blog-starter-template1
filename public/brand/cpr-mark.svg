@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="256" height="256" role="img" aria-label="Custom PC Republic shield">
+  <defs>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef1f5"/><stop offset=".35" stop-color="#9aa1ab"/>
+      <stop offset=".6" stop-color="#d7dbe1"/><stop offset="1" stop-color="#5d636d"/>
+    </linearGradient>
+    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a505a"/><stop offset="1" stop-color="#1c2027"/>
+    </linearGradient>
+    <linearGradient id="spectrum" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#9beb2a"/><stop offset=".5" stop-color="#2e76f8"/><stop offset="1" stop-color="#7b3cf4"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.1" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- steel rim -->
+  <path d="M32 2 57 9.5V30c0 15.5-10.5 25.5-25 32C17.5 55.5 7 45.5 7 30V9.5Z" fill="url(#steel)"/>
+  <!-- gunmetal plate -->
+  <path d="M32 7.2 52.2 13.3V30c0 12.6-8.4 21-20.2 26.6C20.2 51 11.8 42.6 11.8 30V13.3Z" fill="url(#plate)"/>
+  <!-- circuit traces -->
+  <g fill="none" stroke="#b4bbc5" stroke-width=".9" stroke-linecap="round" stroke-linejoin="round" opacity=".9">
+    <path d="M32 18v32"/>
+    <path d="M29.5 12.5V22L23 28.5V43"/><path d="M34.5 12.5V22L41 28.5V43"/>
+    <path d="M26.5 14V20L19 27.5V35"/><path d="M37.5 14V20L45 27.5V35"/>
+    <path d="M29.5 31 26 34.5V46.5"/><path d="M34.5 31 38 34.5V46.5"/>
+    <path d="M23 15.5V18.5L16 25.5V29"/><path d="M41 15.5V18.5L48 25.5V29"/>
+  </g>
+  <g fill="none" stroke="#c9ced6" stroke-width=".7">
+    <circle cx="29.5" cy="12.5" r=".9"/><circle cx="34.5" cy="12.5" r=".9"/>
+    <circle cx="26.5" cy="14" r=".9"/><circle cx="37.5" cy="14" r=".9"/>
+    <circle cx="23" cy="15.5" r=".9"/><circle cx="41" cy="15.5" r=".9"/>
+  </g>
+  <!-- glowing nodes: volt left, circuit-blue spine, violet right -->
+  <g filter="url(#glow)">
+    <circle cx="16" cy="29" r="1.5" fill="#9beb2a"/>
+    <circle cx="19" cy="35" r="1.5" fill="#9beb2a"/>
+    <circle cx="23" cy="43" r="1.6" fill="#9beb2a"/>
+    <circle cx="26" cy="46.5" r="1.4" fill="#9beb2a"/>
+    <circle cx="32" cy="17" r="2.3" fill="#2e76f8"/>
+    <circle cx="32" cy="31" r="2" fill="#2e76f8"/>
+    <circle cx="32" cy="50" r="1.7" fill="#2e76f8"/>
+    <circle cx="48" cy="29" r="1.5" fill="#7b3cf4"/>
+    <circle cx="45" cy="35" r="1.5" fill="#7b3cf4"/>
+    <circle cx="41" cy="43" r="1.6" fill="#7b3cf4"/>
+    <circle cx="38" cy="46.5" r="1.4" fill="#7b3cf4"/>
+  </g>
+  <g fill="#fff" opacity=".9">
+    <circle cx="32" cy="17" r=".8"/><circle cx="32" cy="31" r=".7"/>
+  </g>
+</svg>

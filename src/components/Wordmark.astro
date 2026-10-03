@@ -1,0 +1,74 @@
+---
+import Logo from './Logo.astro';
+
+interface Props {
+	layout?: 'horizontal' | 'stacked';
+	size?: number; // mark size in px; type scales from it
+	tagline?: boolean;
+}
+const { layout = 'horizontal', size = 40, tagline = false } = Astro.props;
+---
+
+<span class:list={['lockup', layout]} style={`--m:${size}px`}>
+	<Logo size={size} />
+	<span class="words">
+		<span class="line1">Custom PC</span>
+		<span class="line2">Republic</span>
+		{tagline && <span class="tag">Plug in. Play secure.</span>}
+	</span>
+</span>
+
+<style>
+	.lockup {
+		display: inline-flex;
+		align-items: center;
+		gap: calc(var(--m) * 0.3);
+		color: var(--fg);
+		text-decoration: none;
+	}
+	.stacked {
+		flex-direction: column;
+		text-align: center;
+	}
+	.words {
+		display: flex;
+		flex-direction: column;
+		font-family: var(--font-brand);
+		font-weight: 800;
+		text-transform: uppercase;
+		line-height: 1;
+		letter-spacing: 0.06em;
+	}
+	.line1 {
+		font-size: calc(var(--m) * 0.36);
+		background: linear-gradient(180deg, #ffffff, var(--steel) 60%, #8d939d);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+	}
+	.line2 {
+		font-size: calc(var(--m) * 0.36);
+		margin-top: calc(var(--m) * 0.06);
+		background: var(--spectrum);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+		filter: drop-shadow(0 0 calc(var(--m) * 0.12) rgba(46, 118, 248, 0.45));
+	}
+	.tag {
+		margin-top: calc(var(--m) * 0.16);
+		font-family: var(--font-sans);
+		font-weight: 500;
+		text-transform: none;
+		letter-spacing: 0.02em;
+		font-size: calc(var(--m) * 0.2);
+		color: var(--sky);
+	}
+	.stacked .line1,
+	.stacked .line2 {
+		font-size: calc(var(--m) * 0.3);
+	}
+	.stacked .tag {
+		font-size: calc(var(--m) * 0.15);
+	}
+</style>

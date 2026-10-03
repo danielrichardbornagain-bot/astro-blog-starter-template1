@@ -1,18 +1,15 @@
 ---
 import HeaderLink from './HeaderLink.astro';
-import Logo from './Logo.astro';
+import Wordmark from './Wordmark.astro';
 import SocialIcons from './SocialIcons.astro';
-import { BRAND, LINKS } from '../consts';
+import { LINKS } from '../consts';
 ---
 
 <header>
 	<nav>
-		<a class="brand" href="/">
-			<Logo size={34} />
-			<span class="brand-text">
-				<span class="brand-name">{BRAND.name}</span>
-				<span class="brand-sub">Blog · {BRAND.subtitle}</span>
-			</span>
+		<a class="brand" href="/" aria-label="Custom PC Republic blog home">
+			<Wordmark size={40} />
+			<span class="chip">Blog</span>
 		</a>
 		<div class="internal-links">
 			<HeaderLink href="/">Home</HeaderLink>
@@ -33,10 +30,21 @@ import { BRAND, LINKS } from '../consts';
 		z-index: 10;
 		margin: 0;
 		padding: 0 1rem;
-		background: rgba(7, 6, 14, 0.78);
+		background: rgba(4, 7, 15, 0.8);
 		backdrop-filter: blur(12px);
 		-webkit-backdrop-filter: blur(12px);
 		border-bottom: 1px solid var(--border);
+		box-shadow: 0 1px 0 rgba(46, 118, 248, 0.15);
+	}
+	header::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: -1px;
+		height: 1px;
+		background: var(--spectrum);
+		opacity: 0.55;
 	}
 	nav {
 		max-width: var(--max);
@@ -54,22 +62,15 @@ import { BRAND, LINKS } from '../consts';
 		text-decoration: none;
 		color: var(--fg);
 	}
-	.brand-text {
-		display: flex;
-		flex-direction: column;
-		line-height: 1.1;
-	}
-	.brand-name {
-		font-family: var(--font-display);
-		font-weight: 800;
-		font-size: 1rem;
-	}
-	.brand-sub {
+	.chip {
 		font-family: var(--font-mono);
-		font-size: 0.65rem;
-		letter-spacing: 0.12em;
+		font-size: 0.62rem;
+		letter-spacing: 0.16em;
 		text-transform: uppercase;
-		color: var(--muted);
+		color: var(--carbon);
+		background: var(--volt);
+		padding: 0.15em 0.5em;
+		clip-path: polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px);
 	}
 	.internal-links {
 		display: flex;
@@ -79,7 +80,9 @@ import { BRAND, LINKS } from '../consts';
 	}
 	.internal-links :global(a) {
 		padding: 0.4em 0.8em;
-		border-radius: 999px;
+		border-radius: var(--radius-sm);
+		font-family: var(--font-display);
+		letter-spacing: 0.02em;
 		color: var(--muted);
 		font-size: 0.95rem;
 		font-weight: 500;
@@ -92,11 +95,11 @@ import { BRAND, LINKS } from '../consts';
 	.internal-links :global(a.active) {
 		color: #fff;
 		background: var(--elevated);
-		box-shadow: inset 0 0 0 1px var(--primary);
+		box-shadow: inset 0 -2px 0 var(--volt);
 		text-decoration: none;
 	}
 	.internal-links .shop {
-		color: var(--blue);
+		color: var(--volt);
 	}
 	.social-links {
 		display: flex;
@@ -111,7 +114,7 @@ import { BRAND, LINKS } from '../consts';
 	}
 	@media (max-width: 860px) {
 		.social-links,
-		.brand-sub {
+		.chip {
 			display: none;
 		}
 	}

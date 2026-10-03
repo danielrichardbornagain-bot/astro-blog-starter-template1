@@ -1,32 +1,49 @@
 /*
-  Custom PC Republic brand theme.
-  Tokens mirror custompcrepublic.com (dark, violet + blue accents,
-  Syne / Outfit / IBM Plex Mono).
+  Custom PC Republic brand theme — "Neon Shield" system.
+  Steel shield + circuit nodes, a volt → circuit-blue → violet spectrum,
+  carbon-fibre ground and Jo'burg midnight. Full guide: /brand
+  Type: Orbitron (wordmark) · Chakra Petch (headings) · Outfit (body) · JetBrains Mono (labels/code)
 */
 
 :root {
-	--bg: #07060e;
-	--surface: #12101c;
-	--panel: #161326;
-	--elevated: #1a1730;
-	--border: #2c2844;
-	--fg: #eceaf6;
-	--muted: #9b97b0;
-	--faint: #6f6a86;
-	--primary: #7c6cff;
-	--blue: #3ba6ff;
-	--ok: #4ade80;
+	/* ---- Brand core (see /brand) ---- */
+	--volt: #9beb2a; /* Volt Green — energy, CTAs */
+	--circuit: #2e76f8; /* Circuit Blue — trust, links */
+	--violet: #7b3cf4; /* Shield Violet — security, depth */
+	--steel: #c5cad3; /* Brushed Steel — mark rim, icons */
+	--gunmetal: #3a3f48; /* Gunmetal — shield plate */
+	--midnight: #041734; /* Jo'burg Midnight — atmosphere */
+	--carbon: #04070f; /* Carbon — page background */
+	--sky: #a8d4f5; /* Skyline Blue — taglines */
+	--spectrum: linear-gradient(90deg, var(--volt), var(--circuit) 50%, var(--violet));
+
+	/* ---- UI surfaces & text ---- */
+	--bg: var(--carbon);
+	--surface: #0a1020;
+	--panel: #0e1529;
+	--elevated: #141d36;
+	--border: #22304f;
+	--fg: #eef2f8;
+	--muted: #a3aec2;
+	--faint: #6b7891;
+
+	/* text-safe tints of the core accents (AA on --bg) */
+	--primary: #9a6bff;
+	--blue: #5b9bff;
+	--ok: var(--volt);
 	--warn: #f5c16c;
 	--danger: #f07178;
 
-	--font-display: "Syne", ui-sans-serif, system-ui, sans-serif;
+	--font-brand: "Orbitron", "Chakra Petch", ui-sans-serif, system-ui, sans-serif;
+	--font-display: "Chakra Petch", ui-sans-serif, system-ui, sans-serif;
 	--font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
-	--font-mono: "IBM Plex Mono", ui-monospace, monospace;
+	--font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-	--radius-sm: 8px;
-	--radius-md: 12px;
-	--radius-lg: 18px;
-	--glow: 0 0 0 1px var(--border), 0 12px 40px -12px rgba(124, 108, 255, 0.45);
+	--radius-sm: 6px;
+	--radius-md: 10px;
+	--radius-lg: 14px;
+	--chamfer: 10px;
+	--glow: 0 0 0 1px var(--border), 0 14px 44px -14px rgba(46, 118, 248, 0.55);
 	--max: 1080px;
 	color-scheme: dark;
 }
@@ -44,8 +61,12 @@ body {
 	padding: 0;
 	font-family: var(--font-sans);
 	background:
-		radial-gradient(900px 500px at 10% -10%, rgba(124, 108, 255, 0.18), transparent 60%),
-		radial-gradient(800px 500px at 110% 10%, rgba(59, 166, 255, 0.12), transparent 60%),
+		radial-gradient(900px 520px at 8% -10%, rgba(155, 235, 42, 0.10), transparent 60%),
+		radial-gradient(900px 560px at 55% -20%, rgba(46, 118, 248, 0.16), transparent 62%),
+		radial-gradient(800px 520px at 110% 8%, rgba(123, 60, 244, 0.16), transparent 60%),
+		linear-gradient(180deg, rgba(4, 23, 52, 0.55), transparent 900px),
+		repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.018) 0 2px, transparent 2px 4px),
+		repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.35) 0 2px, transparent 2px 4px),
 		var(--bg);
 	color: var(--fg);
 	font-size: 19px;
@@ -68,9 +89,9 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: var(--font-display);
 	color: var(--fg);
 	line-height: 1.15;
-	letter-spacing: -0.01em;
+	letter-spacing: 0;
 }
-h1 { font-size: 3.052em; font-weight: 800; }
+h1 { font-size: 3.052em; font-weight: 700; }
 h2 { font-size: 2.441em; font-weight: 700; }
 h3 { font-size: 1.953em; font-weight: 700; }
 h4 { font-size: 1.563em; font-weight: 600; }
@@ -133,7 +154,7 @@ pre > code {
 blockquote {
 	margin: 0 0 1.5em;
 	padding: 0.25em 0 0.25em 1.25em;
-	border-left: 4px solid var(--primary);
+	border-left: 4px solid var(--circuit);
 	color: var(--muted);
 	font-size: 1.1em;
 }
@@ -145,8 +166,8 @@ hr {
 }
 
 ::selection {
-	background: var(--primary);
-	color: #fff;
+	background: var(--volt);
+	color: var(--carbon);
 }
 
 /* ---------- Shared UI pieces ---------- */
@@ -157,23 +178,33 @@ hr {
 	font-size: 0.75rem;
 	letter-spacing: 0.18em;
 	text-transform: uppercase;
-	color: var(--blue);
+	color: var(--volt);
 	margin-bottom: 0.75rem;
 }
 
+.brand-type {
+	font-family: var(--font-brand);
+	font-weight: 800;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
 .gradient-text {
-	background: linear-gradient(90deg, var(--primary), var(--blue));
+	background: var(--spectrum);
 	-webkit-background-clip: text;
 	background-clip: text;
 	color: transparent;
 }
 
 .btn {
+	font-family: var(--font-display);
+	letter-spacing: 0.02em;
+	clip-path: polygon(var(--chamfer) 0, 100% 0, 100% calc(100% - var(--chamfer)), calc(100% - var(--chamfer)) 100%, 0 100%, 0 var(--chamfer));
 	display: inline-flex;
 	align-items: center;
 	gap: 0.5em;
 	padding: 0.7em 1.3em;
-	border-radius: 999px;
+	border-radius: 0;
 	font-weight: 600;
 	font-size: 0.95rem;
 	text-decoration: none;
@@ -188,14 +219,30 @@ hr {
 	box-shadow: var(--glow);
 }
 .btn-primary {
-	background: linear-gradient(90deg, var(--primary), var(--blue));
+	background: var(--volt);
 	border-color: transparent;
-	color: #fff;
+	color: var(--carbon);
+}
+.btn-primary:hover {
+	color: var(--carbon);
+	background: #b4f55a;
+	box-shadow: 0 10px 34px -10px rgba(155, 235, 42, 0.7);
+}
+
+/* Neon rule: the spectrum bar used under headings and in the mark */
+.spectrum-bar {
+	display: block;
+	height: 4px;
+	width: 120px;
+	background: var(--spectrum);
+	border-radius: 2px;
+	box-shadow: 0 0 18px rgba(46, 118, 248, 0.6);
 }
 
 .card {
 	background: linear-gradient(180deg, var(--panel), var(--surface));
 	border: 1px solid var(--border);
+	box-shadow: inset 0 1px 0 rgba(197, 202, 211, 0.06);
 	border-radius: var(--radius-lg);
 	padding: 1.5rem;
 }
