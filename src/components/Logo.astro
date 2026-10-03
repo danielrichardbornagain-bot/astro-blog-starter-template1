@@ -1,0 +1,16 @@
+---
+interface Props {
+	size?: number;
+}
+const { size = 32 } = Astro.props;
+---
+
+<svg viewBox="0 0 32 32" width={size} height={size} aria-hidden="true">
+	<rect width="32" height="32" rx="8" fill="#07060e" stroke="#2c2844"></rect>
+	<polygon points="16,4 26,12 6,12" fill="#eceaf6"></polygon>
+	<rect x="9" y="12" width="14" height="16" rx="1.5" fill="#eceaf6"></rect>
+	<rect x="12" y="14.5" width="8" height="8" rx="1" fill="#07060e"></rect>
+	<rect x="13" y="15.5" width="2.5" height="6" rx="0.4" fill="#7c6cff"></rect>
+	<rect x="16.5" y="15.5" width="2.5" height="6" rx="0.4" fill="#3ba6ff"></rect>
+	<rect x="14" y="24" width="4" height="2" rx="0.4" fill="#3ba6ff"></rect>
+</svg>

@@ -1,0 +1,222 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ZameshFeature from '../components/ZameshFeature.astro';
+import { BRAND, LINKS } from '../consts';
+
+const services = [
+	{ k: 'BUILD', title: 'Custom & prebuilt PCs', body: 'Hand-built gaming rigs, streaming machines and creator workstations — spec’d for the games and apps you actually run.', color: 'var(--primary)' },
+	{ k: 'CONFIGURE', title: '3D PC configurator', body: 'Plan your build in the browser with FPS estimates before you spend a rand.', color: 'var(--blue)' },
+	{ k: 'SECURE', title: 'Zero Trust staging', body: 'Homelab and small-office networks staged with identity-first access, so “plug in” never means “wide open”.', color: 'var(--ok)' },
+	{ k: 'SUPPLY', title: 'Components & upgrades', body: 'Parts retail and upgrade paths for the rig you already own.', color: 'var(--warn)' },
+];
+
+const lineup = [
+	{ name: 'Republic Pulse 1440', note: '1440p gaming' },
+	{ name: 'Lt. Loki War Machine', note: 'flagship gaming' },
+	{ name: 'Republic Cube', note: 'small form factor' },
+	{ name: 'Snowline Creator', note: 'creator workstation' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={`About · ${BRAND.name}`}
+			description={`${BRAND.name} builds custom PCs and Zero Trust homelabs in ${BRAND.location}.`}
+			image="/images/og-default.png"
+		/>
+		<style>
+			.hero {
+				display: grid;
+				grid-template-columns: 1.3fr 1fr;
+				gap: 2.5rem;
+				align-items: center;
+				padding: 2rem 0 1rem;
+			}
+			.hero h1 {
+				font-size: clamp(2.3rem, 5vw, 3.6rem);
+			}
+			.hero p {
+				color: var(--muted);
+				font-size: 1.15rem;
+			}
+			.facts {
+				display: grid;
+				gap: 0.75rem;
+			}
+			.fact {
+				display: flex;
+				justify-content: space-between;
+				gap: 1rem;
+				padding: 0.9rem 1.1rem;
+				border-radius: var(--radius-md);
+				border: 1px solid var(--border);
+				background: var(--panel);
+			}
+			.fact span:first-child {
+				font-family: var(--font-mono);
+				font-size: 0.75rem;
+				letter-spacing: 0.12em;
+				color: var(--faint);
+				text-transform: uppercase;
+			}
+			.fact span:last-child {
+				font-weight: 600;
+				text-align: right;
+			}
+			h2 {
+				font-size: 2rem;
+				margin-top: 3.5rem;
+			}
+			.services {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+				gap: 1rem;
+			}
+			.services .card {
+				border-top: 3px solid var(--accent);
+			}
+			.services h3 {
+				font-size: 1.2rem;
+				margin: 0.3rem 0;
+			}
+			.services p {
+				margin: 0;
+				color: var(--muted);
+				font-size: 0.95rem;
+			}
+			.k {
+				font-family: var(--font-mono);
+				font-size: 0.72rem;
+				letter-spacing: 0.14em;
+				color: var(--accent);
+			}
+			.lineup {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+				gap: 1rem;
+				list-style: none;
+				padding: 0;
+			}
+			.lineup li {
+				padding: 1.1rem;
+				border-radius: var(--radius-md);
+				background: var(--surface);
+				border: 1px dashed var(--border);
+			}
+			.lineup strong {
+				display: block;
+				font-family: var(--font-display);
+			}
+			.lineup span {
+				color: var(--muted);
+				font-size: 0.9rem;
+			}
+			.values {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+				gap: 1.25rem;
+			}
+			.values p {
+				color: var(--muted);
+				margin: 0;
+			}
+			.values h3 {
+				font-size: 1.25rem;
+			}
+			.values u {
+				text-decoration-color: var(--primary);
+				text-decoration-thickness: 2px;
+			}
+			.sister {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+				align-items: center;
+				gap: 1rem;
+				margin-top: 3rem;
+			}
+			.sister p {
+				margin: 0;
+				color: var(--muted);
+			}
+			@media (max-width: 860px) {
+				.hero {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="hero">
+				<div>
+					<span class="eyebrow">// About the Republic</span>
+					<h1>We build machines — and <span class="gradient-text">secure them</span>.</h1>
+					<p>
+						<strong>{BRAND.name}</strong> is a custom PC shop and IT studio in <strong>{BRAND.location}</strong>.
+						We blend <u>gamer culture</u> with <u>infrastructure operations</u>: every rig, homelab and
+						network we touch should be fast to plug in and safe to play on.
+					</p>
+					<div style="display:flex;gap:.75rem;flex-wrap:wrap">
+						<a class="btn btn-primary" href={LINKS.shop} target="_blank" rel="noopener">Visit the shop ↗</a>
+						<a class="btn" href={LINKS.builder} target="_blank" rel="noopener">Open the builder ↗</a>
+					</div>
+				</div>
+				<div class="facts">
+					<div class="fact"><span>Motto</span><span>{BRAND.tagline}</span></div>
+					<div class="fact"><span>Energy</span><span>{BRAND.subtitle}</span></div>
+					<div class="fact"><span>Based in</span><span>Westdene, Randburg</span></div>
+					<div class="fact"><span>Runs on</span><span>Cloudflare Workers</span></div>
+					<div class="fact"><span>Open source</span><span><a href="/zamesh">Zamesh</a></span></div>
+				</div>
+			</section>
+
+			<h2>What we do</h2>
+			<div class="services">
+				{
+					services.map((s) => (
+						<div class="card" style={`--accent:${s.color}`}>
+							<span class="k">{s.k}</span>
+							<h3>{s.title}</h3>
+							<p>{s.body}</p>
+						</div>
+					))
+				}
+			</div>
+
+			<h2>The lineup</h2>
+			<ul class="lineup">
+				{lineup.map((l) => <li><strong>{l.name}</strong><span>{l.note}</span></li>)}
+			</ul>
+
+			<h2>How we work</h2>
+			<div class="values">
+				<div>
+					<h3>🔌 Plug in</h3>
+					<p><strong>Performance first.</strong> Parts are picked for measured frames and real workloads — not spec-sheet bragging.</p>
+				</div>
+				<div>
+					<h3>🛡️ Play secure</h3>
+					<p><strong>Zero Trust by default.</strong> Identity-aware access and sane network segmentation from day one.</p>
+				</div>
+				<div>
+					<h3>🌍 Build in the open</h3>
+					<p><strong>Share the tooling.</strong> Our web stack lives in public through <a href="/zamesh">Zamesh</a> — fork it, fix it, ship it.</p>
+				</div>
+			</div>
+
+			<ZameshFeature />
+
+			<div class="card sister">
+				<p><strong>Sister venture:</strong> Forest of Pines — an adaptive climbing facility in Randburg.</p>
+				<a class="btn" href={LINKS.forestOfPines} target="_blank" rel="noopener">forestofpines.com ↗</a>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
