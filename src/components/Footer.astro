@@ -1,5 +1,5 @@
 ---
-import Logo from './Logo.astro';
+import Wordmark from './Wordmark.astro';
 import SocialIcons from './SocialIcons.astro';
 import { BRAND, LINKS, ZAMESH } from '../consts';
 const today = new Date();
@@ -8,13 +8,7 @@ const today = new Date();
 <footer>
 	<div class="inner">
 		<div class="col brand">
-			<div class="row">
-				<Logo size={40} />
-				<div>
-					<strong>{BRAND.name}</strong>
-					<div class="tag">{BRAND.tagline}</div>
-				</div>
-			</div>
+			<Wordmark size={52} tagline />
 			<p class="muted">{BRAND.location}</p>
 			<div class="social-links"><SocialIcons /></div>
 		</div>
@@ -37,6 +31,7 @@ const today = new Date();
 			<a href="/zamesh">Zamesh project</a>
 			<a href={ZAMESH.repo}>Zamesh on GitHub</a>
 			<a href={ZAMESH.contributing}>Contributing guide</a>
+			<a href="/brand">Brand guidelines</a>
 		</div>
 	</div>
 	<div class="legal">
@@ -48,9 +43,23 @@ const today = new Date();
 		margin-top: 4rem;
 		padding: 3rem 1rem 2rem;
 		border-top: 1px solid var(--border);
-		background: var(--surface);
+		background:
+			url('/brand/moodboard/joburg-tower.jpg') right bottom / auto 100% no-repeat,
+			linear-gradient(180deg, var(--surface), var(--midnight));
+		position: relative;
 		color: var(--muted);
 		font-size: 0.95rem;
+	}
+	footer::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(90deg, var(--surface) 60%, rgba(10, 16, 32, 0.88));
+		pointer-events: none;
+	}
+	.inner,
+	.legal {
+		position: relative;
 	}
 	.inner {
 		max-width: var(--max);
@@ -70,20 +79,6 @@ const today = new Date();
 	}
 	.col a:hover {
 		color: var(--fg);
-	}
-	.row {
-		display: flex;
-		gap: 0.75rem;
-		align-items: center;
-	}
-	.brand strong {
-		font-family: var(--font-display);
-		font-size: 1.1rem;
-	}
-	.tag {
-		font-family: var(--font-mono);
-		font-size: 0.8rem;
-		color: var(--blue);
 	}
 	.muted {
 		margin: 0.5rem 0;
