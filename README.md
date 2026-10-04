@@ -5,7 +5,14 @@
 - 🛡️ Brand from the official card: steel shield + chip logo, brushed-steel wordmark, violet/blue glow on carbon. See [`BRAND.md`](BRAND.md) and `/brand`
 - 🌗 Light / dark theme toggle
 - 📄 Pages: home (brand card), `/services`, `/about` (journey + home/business views), `/blog`, `/shop`, `/contact`
-- ✉️ Contact form → `src/pages/api/contact.ts` → stored in the `CONTACT_MESSAGES` KV namespace (Cloudflare dashboard → Storage & Databases → KV)
+- ✉️ Contact form → `src/pages/api/contact.ts` → stored in the `CONTACT_MESSAGES` KV namespace (Cloudflare dashboard → Storage & Databases → KV) → email alert via Cloudflare Email Routing (`src/lib/alert-email.ts`)
+
+### Contact alert emails — one-time setup
+1. Cloudflare dashboard → **custompcrepublic.com → Email → Email Routing → Destination addresses** → add and **verify** the inbox that should get alerts.
+2. **Workers & Pages → astro-blog-starter-template1 → Settings → Variables and Secrets** → add a **Secret** named `ALERT_TO` with that inbox address.
+3. Alerts are sent from `alerts@custompcrepublic.com` (`ALERT_FROM` in `wrangler.json`). Hit **Reply** in the alert to answer the sender.
+
+If `ALERT_TO` is missing or sending fails, the message is still saved in KV and a warning is logged.
 - ✍️ New posts: copy `src/content/blog/_TEMPLATE.md`; banner placeholder at `public/images/blog/placeholder.jpg`
 - 🔗 Site data (services, vendors, journey) lives in `src/consts.ts`
 
