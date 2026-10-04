@@ -1,41 +1,45 @@
 ---
 import Wordmark from './Wordmark.astro';
 import SocialIcons from './SocialIcons.astro';
-import { BRAND, LINKS, ZAMESH } from '../consts';
+import { BRAND, CONTACT, LINKS, ZAMESH } from '../consts';
 const today = new Date();
 ---
 
 <footer>
 	<div class="inner">
 		<div class="col brand">
-			<Wordmark size={52} tagline />
-			<p class="muted">{BRAND.location}</p>
+			<Wordmark size={44} />
+			<p>{BRAND.blurb}</p>
 			<div class="social-links"><SocialIcons /></div>
 		</div>
 		<div class="col">
-			<span class="eyebrow">Republic</span>
-			<a href={LINKS.main}>Main site</a>
-			<a href={LINKS.shop}>Shop</a>
-			<a href={LINKS.builder}>PC Builder</a>
-			<a href={LINKS.lab}>Lab</a>
+			<span class="eyebrow">Subdomains</span>
+			<a href={LINKS.main}>www.custompcrepublic.com</a>
+			<a href={LINKS.shop}>shop.custompcrepublic.com</a>
+			<a href={LINKS.builder}>builder.custompcrepublic.com</a>
+			<a href={LINKS.cloud}>cloud.custompcrepublic.com</a>
+			<a href={LINKS.lab}>lab.custompcrepublic.com</a>
+			<a href={LINKS.forum}>forum.custompcrepublic.com</a>
 		</div>
 		<div class="col">
-			<span class="eyebrow">Community</span>
-			<a href={LINKS.forum}>Forum</a>
-			<a href={LINKS.lobby}>Lobby</a>
-			<a href={LINKS.youtube}>YouTube</a>
-			<a href={LINKS.links}>All links</a>
-		</div>
-		<div class="col">
-			<span class="eyebrow">Open source</span>
+			<span class="eyebrow">This site</span>
+			<a href="/blog">Blog</a>
+			<a href="/shop">Shop</a>
+			<a href="/services">Services</a>
 			<a href="/zamesh">Zamesh project</a>
-			<a href={ZAMESH.repo}>Zamesh on GitHub</a>
-			<a href={ZAMESH.contributing}>Contributing guide</a>
 			<a href="/brand">Brand guidelines</a>
+		</div>
+		<div class="col">
+			<span class="eyebrow">Elsewhere</span>
+			<a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+			<a href={LINKS.youtube}>YouTube</a>
+			<a href={ZAMESH.repo}>GitHub</a>
+			<a href={LINKS.forestOfPines}>Forest of Pines</a>
+			<a href={LINKS.links}>Full link tree</a>
 		</div>
 	</div>
 	<div class="legal">
-		&copy; {today.getFullYear()} {BRAND.name}. All rights reserved.
+		&copy; {today.getFullYear()} {BRAND.name} · Johannesburg · Cloudflare-ready delivery
 	</div>
 </footer>
 <style>
@@ -43,49 +47,42 @@ const today = new Date();
 		margin-top: 4rem;
 		padding: 3rem 1rem 2rem;
 		border-top: 1px solid var(--border);
-		background:
-			url('/brand/moodboard/joburg-tower.jpg') right bottom / auto 100% no-repeat,
-			linear-gradient(180deg, var(--surface), var(--midnight));
-		position: relative;
+		background: var(--surface);
 		color: var(--muted);
 		font-size: 0.95rem;
-	}
-	footer::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(90deg, var(--surface) 60%, rgba(10, 16, 32, 0.88));
-		pointer-events: none;
-	}
-	.inner,
-	.legal {
-		position: relative;
 	}
 	.inner {
 		max-width: var(--max);
 		margin: 0 auto;
 		display: grid;
-		grid-template-columns: 2fr 1fr 1fr 1fr;
+		grid-template-columns: 1.6fr 1.2fr 0.9fr 1.1fr;
 		gap: 2rem;
 	}
 	.col {
 		display: flex;
 		flex-direction: column;
-		gap: 0.4rem;
+		gap: 0.45rem;
+		min-width: 0;
 	}
 	.col a {
 		color: var(--muted);
 		text-decoration: none;
+		overflow-wrap: anywhere;
 	}
 	.col a:hover {
 		color: var(--fg);
 	}
-	.muted {
-		margin: 0.5rem 0;
+	.brand p {
+		margin: 0.75rem 0;
+		max-width: 34ch;
 	}
 	.social-links {
 		display: flex;
 		gap: 0.9rem;
+	}
+	.social-links :global(a) {
+		color: var(--muted);
+		display: flex;
 	}
 	.legal {
 		max-width: var(--max);
@@ -94,8 +91,9 @@ const today = new Date();
 		border-top: 1px solid var(--border);
 		font-size: 0.85rem;
 		color: var(--faint);
+		text-align: center;
 	}
-	@media (max-width: 720px) {
+	@media (max-width: 860px) {
 		.inner {
 			grid-template-columns: 1fr 1fr;
 		}

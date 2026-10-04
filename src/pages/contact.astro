@@ -1,0 +1,108 @@
+---
+import Page from '../layouts/Page.astro';
+import { BRAND, CONTACT, LINKS } from '../consts';
+---
+
+<Page
+	title="Contact"
+	description="Email, services and the client lobby for Custom PC Republic."
+	eyebrow="Get in touch"
+	heading="Talk to the Republic"
+	lead={BRAND.pitch}
+>
+	<div class="grid">
+		<div class="card">
+			<span class="eyebrow">Primary email</span>
+			<h3><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></h3>
+			<p>Quotes, support tickets and build questions. Daniel answers personally.</p>
+		</div>
+		<div class="card">
+			<span class="eyebrow">Live</span>
+			<h3><a href={LINKS.lobby} target="_blank" rel="noopener">Client lobby ↗</a></h3>
+			<p>Video waiting room for quotes, Zero Trust onboarding, and custom-build walkthroughs.</p>
+		</div>
+	</div>
+
+	<div class="section-head"><h2>Where to go</h2></div>
+	<div class="grid3">
+		<a class="card route" href={LINKS.main} target="_blank" rel="noopener">
+			<span class="eyebrow">B2C · businesses &amp; individuals</span>
+			<h3>www.custompcrepublic.com</h3>
+			<p>Our main website for services, solutions, and technology support.</p>
+		</a>
+		<a class="card route" href="/services">
+			<span class="eyebrow">B2B service offering</span>
+			<h3>Managed IT &amp; cloud</h3>
+			<p>Tailored IT solutions and managed services for businesses and organisations.</p>
+		</a>
+		<a class="card route" href={CONTACT.portfolio} target="_blank" rel="noopener">
+			<span class="eyebrow">Portfolio · freelance</span>
+			<h3>danieljacobs.custompcrepublic.com</h3>
+			<p>Projects, experience, and freelance solutions delivered by Daniel Jacobs.</p>
+		</a>
+	</div>
+
+	<div class="card mission">
+		<p>
+			Master expertise in <strong class="v">knowing</strong> your technology, <strong class="b">supporting</strong> it, then
+			<strong class="v">improving</strong> it — with as much <strong class="b">synergy</strong> as possible for your workforce and
+			your <strong class="v">business</strong>.
+		</p>
+		<div class="pillars">{BRAND.pillars.map((p) => <span class="pill">✓ {p}</span>)}</div>
+	</div>
+</Page>
+
+<style>
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+	}
+	.grid3 {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1rem;
+	}
+	.card h3 {
+		font-size: 1.2rem;
+		overflow-wrap: anywhere;
+	}
+	.card p {
+		margin: 0;
+		color: var(--muted);
+	}
+	.route {
+		text-decoration: none;
+		color: var(--fg);
+	}
+	.route:hover {
+		border-color: var(--primary);
+		color: var(--fg);
+	}
+	.mission {
+		margin-top: 1.5rem;
+		font-size: 1.15rem;
+	}
+	.mission p {
+		color: var(--text);
+		max-width: 62ch;
+	}
+	.v {
+		color: var(--primary);
+	}
+	.b {
+		color: var(--blue);
+	}
+	.pillars {
+		display: flex;
+		gap: 0.5rem;
+		margin-top: 1rem;
+		flex-wrap: wrap;
+	}
+	@media (max-width: 760px) {
+		.grid,
+		.grid3 {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+</style>

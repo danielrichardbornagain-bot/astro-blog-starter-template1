@@ -1,0 +1,117 @@
+---
+import Page from '../layouts/Page.astro';
+import NetworkList from '../components/NetworkList.astro';
+import { SERVICES, PACKAGES, BRAND, CONTACT, LINKS } from '../consts';
+---
+
+<Page
+	title="Services"
+	description="Proactive projects, cloud engineering, web presence and DNS from Custom PC Republic."
+	eyebrow="cloud.custompcrepublic.com"
+	heading="Network & cloud"
+	lead="The other half of the Republic: serverless web on Cloudflare, plus the shop, builder, lobby, and lab as named subdomains. Hardware and delivery from one operator."
+>
+	<div class="grid2">
+		{
+			SERVICES.map((s) => (
+				<div class="card">
+					<h3>{s.title}</h3>
+					<p>{s.body}</p>
+				</div>
+			))
+		}
+	</div>
+
+	<div class="section-head"><h2>Packages</h2></div>
+	<div class="grid3">
+		{
+			PACKAGES.map((p) => (
+				<div class="card pkg">
+					<span class="eyebrow">{p.tier}</span>
+					<h3>{p.price}</h3>
+					<p>{p.body}</p>
+				</div>
+			))
+		}
+	</div>
+
+	<div class="card sla">
+		<div>
+			<span class="eyebrow">Tech support</span>
+			<h3>{BRAND.pitch}</h3>
+			<p>
+				We take the <strong>tech jargon</strong> out of your tech, and improve <strong>efficiencies</strong> and
+				<strong>innovations</strong> as we do it.
+			</p>
+		</div>
+		<div class="actions">
+			<a class="btn btn-primary" href="/contact">Get in touch</a>
+			<a class="btn" href={LINKS.lobby} target="_blank" rel="noopener">Join the lobby ↗</a>
+		</div>
+	</div>
+
+	<div class="section-head"><h2>Subdomains</h2></div>
+	<NetworkList />
+	<p class="note">
+		Everything runs on Cloudflare's edge — mapping hosts is a DNS cutover, not a rewrite.
+		<a href={LINKS.cloud} target="_blank" rel="noopener">Existing cloud studio →</a> · <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+	</p>
+</Page>
+
+<style>
+	.grid2 {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+	}
+	.grid3 {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1rem;
+	}
+	.card h3 {
+		font-size: 1.25rem;
+		margin-bottom: 0.35rem;
+	}
+	.card p {
+		margin: 0;
+		color: var(--muted);
+	}
+	.pkg h3 {
+		font-size: 1.6rem;
+	}
+	.pkg .eyebrow {
+		margin-bottom: 0.25rem;
+		color: var(--faint);
+	}
+	.sla {
+		margin-top: 1.5rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1.5rem;
+		flex-wrap: wrap;
+	}
+	.sla > div:first-child {
+		max-width: 640px;
+	}
+	.sla h3 {
+		font-size: 1.3rem;
+	}
+	.actions {
+		display: flex;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+	}
+	.note {
+		margin-top: 1.5rem;
+		color: var(--muted);
+		font-size: 0.95rem;
+	}
+	@media (max-width: 760px) {
+		.grid2,
+		.grid3 {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+</style>

@@ -1,222 +1,186 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Page from '../layouts/Page.astro';
 import ZameshFeature from '../components/ZameshFeature.astro';
-import { BRAND, LINKS } from '../consts';
+import Logo from '../components/Logo.astro';
+import { BRAND, CONTACT, LINKS, PRODUCTS } from '../consts';
 
 const services = [
-	{ k: 'BUILD', title: 'Custom & prebuilt PCs', body: 'Hand-built gaming rigs, streaming machines and creator workstations — spec’d for the games and apps you actually run.', color: 'var(--primary)' },
-	{ k: 'CONFIGURE', title: '3D PC configurator', body: 'Plan your build in the browser with FPS estimates before you spend a rand.', color: 'var(--blue)' },
-	{ k: 'SECURE', title: 'Zero Trust staging', body: 'Homelab and small-office networks staged with identity-first access, so “plug in” never means “wide open”.', color: 'var(--ok)' },
-	{ k: 'SUPPLY', title: 'Components & upgrades', body: 'Parts retail and upgrade paths for the rig you already own.', color: 'var(--warn)' },
+	{ k: 'Build', title: 'Custom & prebuilt PCs', body: 'Hand-built towers, laptops and stream boxes — cabled, stress-tested and burned in overnight in Randburg.' },
+	{ k: 'Secure', title: 'Zero Trust staging', body: 'Identity, DNS shield and firmware lock for homes, homelabs and branches. Same stack we run on our own rack.' },
+	{ k: 'Support', title: 'Managed IT & support', body: 'Tailored IT solutions and emergency tech support with 99% SLA resolution for businesses and individuals.' },
+	{ k: 'Deliver', title: 'Cloud & web', body: 'Serverless sites on Cloudflare Pages and Workers, plus DNS hygiene, migrations and automation.' },
 ];
-
-const lineup = [
-	{ name: 'Republic Pulse 1440', note: '1440p gaming' },
-	{ name: 'Lt. Loki War Machine', note: 'flagship gaming' },
-	{ name: 'Republic Cube', note: 'small form factor' },
-	{ name: 'Snowline Creator', note: 'creator workstation' },
-];
+const lineup = PRODUCTS.filter((p) => p.floor);
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead
-			title={`About · ${BRAND.name}`}
-			description={`${BRAND.name} builds custom PCs and Zero Trust homelabs in ${BRAND.location}.`}
-			image="/images/og-default.jpg"
-		/>
-		<style>
-			.hero {
-				display: grid;
-				grid-template-columns: 1.3fr 1fr;
-				gap: 2.5rem;
-				align-items: center;
-				padding: 2rem 0 1rem;
-			}
-			.hero h1 {
-				font-size: clamp(2.3rem, 5vw, 3.6rem);
-			}
-			.hero p {
-				color: var(--muted);
-				font-size: 1.15rem;
-			}
-			.facts {
-				display: grid;
-				gap: 0.75rem;
-			}
-			.fact {
-				display: flex;
-				justify-content: space-between;
-				gap: 1rem;
-				padding: 0.9rem 1.1rem;
-				border-radius: var(--radius-md);
-				border: 1px solid var(--border);
-				background: var(--panel);
-			}
-			.fact span:first-child {
-				font-family: var(--font-mono);
-				font-size: 0.75rem;
-				letter-spacing: 0.12em;
-				color: var(--faint);
-				text-transform: uppercase;
-			}
-			.fact span:last-child {
-				font-weight: 600;
-				text-align: right;
-			}
-			h2 {
-				font-size: 2rem;
-				margin-top: 3.5rem;
-			}
-			.services {
-				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-				gap: 1rem;
-			}
-			.services .card {
-				border-top: 3px solid var(--accent);
-			}
-			.services h3 {
-				font-size: 1.2rem;
-				margin: 0.3rem 0;
-			}
-			.services p {
-				margin: 0;
-				color: var(--muted);
-				font-size: 0.95rem;
-			}
-			.k {
-				font-family: var(--font-mono);
-				font-size: 0.72rem;
-				letter-spacing: 0.14em;
-				color: var(--accent);
-			}
-			.lineup {
-				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-				gap: 1rem;
-				list-style: none;
-				padding: 0;
-			}
-			.lineup li {
-				padding: 1.1rem;
-				border-radius: var(--radius-md);
-				background: var(--surface);
-				border: 1px dashed var(--border);
-			}
-			.lineup strong {
-				display: block;
-				font-family: var(--font-display);
-			}
-			.lineup span {
-				color: var(--muted);
-				font-size: 0.9rem;
-			}
-			.values {
-				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-				gap: 1.25rem;
-			}
-			.values p {
-				color: var(--muted);
-				margin: 0;
-			}
-			.values h3 {
-				font-size: 1.25rem;
-			}
-			.values u {
-				text-decoration-color: var(--primary);
-				text-decoration-thickness: 2px;
-			}
-			.sister {
-				display: flex;
-				flex-wrap: wrap;
-				justify-content: space-between;
-				align-items: center;
-				gap: 1rem;
-				margin-top: 3rem;
-			}
-			.sister p {
-				margin: 0;
-				color: var(--muted);
-			}
-			@media (max-width: 860px) {
-				.hero {
-					grid-template-columns: 1fr;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section class="hero">
-				<div>
-					<span class="eyebrow">// About the Republic</span>
-					<h1>We build machines — and <span class="gradient-text">secure them</span>.</h1>
-					<p>
-						<strong>{BRAND.name}</strong> is a custom PC shop and IT studio in <strong>{BRAND.location}</strong>.
-						We blend <u>gamer culture</u> with <u>infrastructure operations</u>: every rig, homelab and
-						network we touch should be fast to plug in and safe to play on.
-					</p>
-					<div style="display:flex;gap:.75rem;flex-wrap:wrap">
-						<a class="btn btn-primary" href={LINKS.shop} target="_blank" rel="noopener">Visit the shop ↗</a>
-						<a class="btn" href={LINKS.builder} target="_blank" rel="noopener">Open the builder ↗</a>
-					</div>
-				</div>
-				<div class="facts">
-					<div class="fact"><span>Motto</span><span>{BRAND.tagline}</span></div>
-					<div class="fact"><span>Energy</span><span>{BRAND.subtitle}</span></div>
-					<div class="fact"><span>Based in</span><span>Westdene, Randburg</span></div>
-					<div class="fact"><span>Runs on</span><span>Cloudflare Workers</span></div>
-					<div class="fact"><span>Open source</span><span><a href="/zamesh">Zamesh</a></span></div>
-				</div>
-			</section>
+<Page
+	title="About"
+	description={`${BRAND.name} — hand-built systems, Zero Trust staging and serverless delivery from ${BRAND.location}.`}
+	eyebrow="About the Republic"
+	heading="Gamers and operators on the same desk."
+>
+	<div slot="intro" class="intro">
+		<p class="lead">
+			<strong>{BRAND.name}</strong> builds custom PCs, stages Zero Trust networks and ships serverless websites from
+			<strong>Westdene, Randburg</strong>. We take the tech jargon out of your tech — and improve efficiencies and
+			innovations as we do it.
+		</p>
+	</div>
 
-			<h2>What we do</h2>
-			<div class="services">
-				{
-					services.map((s) => (
-						<div class="card" style={`--accent:${s.color}`}>
-							<span class="k">{s.k}</span>
-							<h3>{s.title}</h3>
-							<p>{s.body}</p>
-						</div>
-					))
-				}
-			</div>
+	<div class="split">
+		<div class="card mission">
+			<span class="eyebrow">Our mission</span>
+			<p>
+				Master expertise in <strong class="v">knowing</strong> your technology, <strong class="b">supporting</strong> it,
+				then <strong class="v">improving</strong> it — with as much <strong class="b">synergy</strong> as possible for
+				your workforce and your <strong class="v">business</strong>.
+			</p>
+			<div class="pillars">{BRAND.pillars.map((p) => <span class="pill">✓ {p}</span>)}</div>
+		</div>
+		<div class="card facts">
+			<Logo size={84} variant="full" />
+			<dl>
+				<div><dt>Motto</dt><dd>{BRAND.tagline}</dd></div>
+				<div><dt>Energy</dt><dd>{BRAND.subtitle}</dd></div>
+				<div><dt>Based in</dt><dd>Westdene, Randburg</dd></div>
+				<div><dt>Email</dt><dd><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></dd></div>
+			</dl>
+		</div>
+	</div>
 
-			<h2>The lineup</h2>
-			<ul class="lineup">
-				{lineup.map((l) => <li><strong>{l.name}</strong><span>{l.note}</span></li>)}
-			</ul>
-
-			<h2>How we work</h2>
-			<div class="values">
-				<div>
-					<h3>🔌 Plug in</h3>
-					<p><strong>Performance first.</strong> Parts are picked for measured frames and real workloads — not spec-sheet bragging.</p>
+	<div class="section-head"><h2>What we do</h2></div>
+	<div class="grid4">
+		{
+			services.map((s) => (
+				<div class="card svc">
+					<span class="eyebrow">{s.k}</span>
+					<h3>{s.title}</h3>
+					<p>{s.body}</p>
 				</div>
-				<div>
-					<h3>🛡️ Play secure</h3>
-					<p><strong>Zero Trust by default.</strong> Identity-aware access and sane network segmentation from day one.</p>
-				</div>
-				<div>
-					<h3>🌍 Build in the open</h3>
-					<p><strong>Share the tooling.</strong> Our web stack lives in public through <a href="/zamesh">Zamesh</a> — fork it, fix it, ship it.</p>
-				</div>
-			</div>
+			))
+		}
+	</div>
 
-			<ZameshFeature />
+	<div class="section-head">
+		<h2>The lineup</h2>
+		<a href="/shop">Full catalogue →</a>
+	</div>
+	<ul class="lineup">
+		{lineup.map((l) => <li><strong>{l.name}</strong><span>{l.kind} · <span class="price">{l.price}</span></span></li>)}
+	</ul>
 
-			<div class="card sister">
-				<p><strong>Sister venture:</strong> Forest of Pines — an adaptive climbing facility in Randburg.</p>
-				<a class="btn" href={LINKS.forestOfPines} target="_blank" rel="noopener">forestofpines.com ↗</a>
-			</div>
-		</main>
-		<Footer />
-	</body>
-</html>
+	<ZameshFeature />
+
+	<div class="card sister">
+		<p><strong>Sister venture:</strong> Forest of Pines — Climbing Tree, adaptive climbing sessions in Randburg led by Daniel Jacobs.</p>
+		<a class="btn" href={LINKS.forestOfPines} target="_blank" rel="noopener">forestofpines.com ↗</a>
+	</div>
+</Page>
+
+<style>
+	.split {
+		display: grid;
+		grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+		gap: 1rem;
+	}
+	.mission p {
+		font-size: 1.2rem;
+		line-height: 1.6;
+		color: var(--text);
+	}
+	.v { color: var(--primary); }
+	.b { color: var(--blue); }
+	.pillars {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+	.facts {
+		display: flex;
+		gap: 1.25rem;
+		align-items: center;
+	}
+	dl {
+		margin: 0;
+		display: grid;
+		gap: 0.55rem;
+		flex: 1;
+		min-width: 0;
+	}
+	dt {
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--faint);
+	}
+	dd {
+		margin: 0;
+		font-weight: 600;
+		overflow-wrap: anywhere;
+	}
+	.grid4 {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 1rem;
+	}
+	.svc h3 {
+		font-size: 1.15rem;
+		margin-bottom: 0.35rem;
+	}
+	.svc p {
+		margin: 0;
+		color: var(--muted);
+		font-size: 0.95rem;
+	}
+	.lineup {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 1rem;
+	}
+	.lineup li {
+		padding: 1rem 1.1rem;
+		border: 1px dashed var(--border);
+		border-radius: var(--radius-md);
+		background: var(--surface);
+	}
+	.lineup strong {
+		display: block;
+		font-family: var(--font-display);
+	}
+	.lineup span {
+		color: var(--muted);
+		font-size: 0.9rem;
+	}
+	.sister {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+	.sister p {
+		margin: 0;
+		color: var(--muted);
+	}
+	@media (max-width: 960px) {
+		.grid4,
+		.lineup {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+	@media (max-width: 760px) {
+		.split,
+		.grid4,
+		.lineup {
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.facts {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+	}
+</style>

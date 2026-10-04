@@ -1,0 +1,68 @@
+---
+import { NETWORK } from '../consts';
+---
+
+<ul class="network">
+	{
+		NETWORK.map((n) => (
+			<li>
+				<a href={n.url} target={n.url.startsWith('http') ? '_blank' : undefined} rel="noopener">
+					<span>
+						<code class="host">{n.host}</code>
+						<span class="body">{n.body}</span>
+					</span>
+					<span class="label">{n.label}</span>
+				</a>
+			</li>
+		))
+	}
+</ul>
+
+<style>
+	.network {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.75rem;
+	}
+	a {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem;
+		padding: 0.85rem 1.1rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius-md);
+		background: var(--panel);
+		text-decoration: none;
+		color: var(--fg);
+	}
+	a:hover {
+		border-color: var(--primary);
+		color: var(--fg);
+	}
+	.host {
+		all: unset;
+		display: block;
+		font-family: var(--font-mono);
+		font-size: 0.82rem;
+		color: var(--blue);
+		overflow-wrap: anywhere;
+	}
+	.body {
+		font-size: 0.93rem;
+		color: var(--muted);
+	}
+	.label {
+		font-size: 0.8rem;
+		color: var(--faint);
+		white-space: nowrap;
+	}
+	@media (max-width: 760px) {
+		.network {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+</style>

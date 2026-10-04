@@ -3,14 +3,17 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import PostCard from '../components/PostCard.astro';
+import ProductCard from '../components/ProductCard.astro';
+import NetworkList from '../components/NetworkList.astro';
 import ZameshFeature from '../components/ZameshFeature.astro';
 import Logo from '../components/Logo.astro';
-import { SITE_TITLE, SITE_DESCRIPTION, BRAND, LINKS } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, BRAND, LINKS, PRODUCTS } from '../consts';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.slice(0, 3);
+const floor = PRODUCTS.filter((p) => p.floor);
 ---
 
 <!doctype html>
@@ -23,29 +26,15 @@ const posts = (await getCollection('blog'))
 				grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
 				gap: 2rem;
 				align-items: center;
-				padding: 3rem 0 2rem;
-			}
-			.hero-mark {
-				display: grid;
-				place-items: center;
-				filter: drop-shadow(0 0 40px rgba(46, 118, 248, 0.45)) drop-shadow(0 0 80px rgba(123, 60, 244, 0.25));
-			}
-			@media (max-width: 760px) {
-				.hero {
-					grid-template-columns: minmax(0, 1fr);
-				}
-				.hero-mark {
-					display: none;
-				}
+				padding: 2.5rem 0 1rem;
 			}
 			.hero h1 {
-				font-size: clamp(2.6rem, 6.5vw, 4.6rem);
+				font-size: clamp(2.6rem, 6.5vw, 4.4rem);
 				line-height: 1.02;
+				margin-bottom: 1rem;
 			}
-			.hero p {
-				font-size: 1.2rem;
-				color: var(--muted);
-				max-width: 640px;
+			.hero h1 span {
+				display: block;
 			}
 			.actions {
 				display: flex;
@@ -53,41 +42,57 @@ const posts = (await getCollection('blog'))
 				gap: 0.75rem;
 				margin-top: 1.5rem;
 			}
-			.pillars {
+			.hero-mark {
 				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+				place-items: center;
+				filter: drop-shadow(0 18px 50px rgba(124, 108, 255, 0.35));
+			}
+			.grid4 {
+				display: grid;
+				grid-template-columns: repeat(4, minmax(0, 1fr));
 				gap: 1rem;
-				margin: 2rem 0 1rem;
 			}
-			.pillars .card h3 {
+			.grid3 {
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: 1rem;
+			}
+			.feature h3 {
 				font-size: 1.2rem;
-				margin-bottom: 0.3rem;
+				margin: 0.5rem 0 0.35rem;
 			}
-			.pillars .card p {
+			.feature p {
 				margin: 0;
 				color: var(--muted);
 				font-size: 0.95rem;
 			}
-			.kicker {
-				font-family: var(--font-mono);
-				font-size: 0.75rem;
-				color: var(--volt);
+			.icon {
+				font-size: 1.3rem;
 			}
-			.section-head {
+			.pillars {
 				display: flex;
-				justify-content: space-between;
-				align-items: end;
-				gap: 1rem;
-				margin: 3rem 0 1.25rem;
+				flex-wrap: wrap;
+				gap: 0.5rem;
+				margin-top: 1rem;
 			}
-			.section-head h2 {
-				font-size: 2rem;
-				margin: 0;
+			@media (max-width: 960px) {
+				.grid4 {
+					grid-template-columns: repeat(2, minmax(0, 1fr));
+				}
 			}
-			.grid {
-				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-				gap: 1.5rem;
+			@media (max-width: 760px) {
+				.hero,
+				.grid3 {
+					grid-template-columns: minmax(0, 1fr);
+				}
+				.hero-mark {
+					display: none;
+				}
+			}
+			@media (max-width: 520px) {
+				.grid4 {
+					grid-template-columns: minmax(0, 1fr);
+				}
 			}
 		</style>
 	</head>
@@ -96,49 +101,60 @@ const posts = (await getCollection('blog'))
 		<main>
 			<section class="hero">
 				<div>
-					<span class="eyebrow">// {BRAND.subtitle}</span>
-					<h1>Plug in.<br /><span class="gradient-text">Play secure.</span></h1>
-					<span class="spectrum-bar" style="margin:0 0 1.25rem"></span>
-					<p>
-						The official blog of <strong>{BRAND.name}</strong> — custom gaming rigs, creator workstations,
-						<strong>Zero Trust</strong> homelabs and the open-source work behind them.
+					<span class="eyebrow">blog.custompcrepublic.com</span>
+					<h1><span>Plug in.</span><span class="gradient-text">Play secure.</span></h1>
+					<p class="lead">
+						Custom towers, a 3D builder with live FPS graphs, and <strong>Zero Trust</strong> staging — built in
+						Johannesburg for <strong>gamers and operators</strong>. This is the journal: build logs, rack diaries
+						and lab notes.
 					</p>
 					<div class="actions">
-						<a class="btn btn-primary" href="/blog">Read the blog</a>
-						<a class="btn" href="/zamesh">Contribute to Zamesh</a>
-						<a class="btn" href={LINKS.builder} target="_blank" rel="noopener">Configure a PC ↗</a>
+						<a class="btn btn-primary" href="/blog">Read the blog →</a>
+						<a class="btn" href="/shop">Browse the shop</a>
+						<a class="btn" href={LINKS.builder} target="_blank" rel="noopener">Enter the builder ↗</a>
 					</div>
+					<div class="pillars">{BRAND.pillars.map((p) => <span class="pill">✓ {p}</span>)}</div>
 				</div>
-				<div class="hero-mark"><Logo size={300} variant="full" /></div>
-			</section>
-
-			<section class="pillars" aria-label="What we write about">
-				<div class="card">
-					<span class="kicker">01 · BUILDS</span>
-					<h3>Republic rigs</h3>
-					<p>Pulse 1440, Lt. Loki War Machine, Republic Cube &amp; Snowline Creator — build logs and benchmarks.</p>
-				</div>
-				<div class="card">
-					<span class="kicker">02 · SECURITY</span>
-					<h3>Zero Trust staging</h3>
-					<p>Homelab and small-office setups that ship secure by default.</p>
-				</div>
-				<div class="card">
-					<span class="kicker">03 · OPEN SOURCE</span>
-					<h3>Zamesh</h3>
-					<p>Workers templates we maintain in the open — and you can help.</p>
-				</div>
+				<div class="hero-mark"><Logo size={280} variant="full" /></div>
 			</section>
 
 			<div class="section-head">
 				<h2>Latest posts</h2>
 				<a href="/blog">All posts →</a>
 			</div>
-			<div class="grid">
-				{posts.map((post) => <PostCard post={post} />)}
+			<div class="grid3">{posts.map((post) => <PostCard post={post} />)}</div>
+
+			<div class="section-head">
+				<h2>Floor machines</h2>
+				<a href="/shop">Full catalogue →</a>
+			</div>
+			<div class="grid4">{floor.map((p) => <ProductCard product={p} />)}</div>
+
+			<div class="grid3" style="margin-top:1.5rem">
+				<div class="card feature">
+					<span class="icon">🖥️</span>
+					<h3>Custom + capture</h3>
+					<p>From the Pulse 1440 to the Lt. Loki stream box. Built, cabled, burned in.</p>
+				</div>
+				<div class="card feature">
+					<span class="icon">🛡️</span>
+					<h3>Zero Trust retail</h3>
+					<p>Identity, DNS shield, firmware lock. Same stack we run on the homelab rack.</p>
+				</div>
+				<div class="card feature">
+					<span class="icon">🌲</span>
+					<h3>Forest of Pines</h3>
+					<p>The side hustle: adaptive climbing in Randburg. Art and movement downstairs.</p>
+				</div>
 			</div>
 
 			<ZameshFeature />
+
+			<div class="section-head">
+				<h2>The Republic network</h2>
+			</div>
+			<p class="lead" style="margin-top:-.5rem">Subdomains and sister sites — cloud studio, lab, forum, lobby, and Forest of Pines.</p>
+			<NetworkList />
 		</main>
 		<Footer />
 	</body>
