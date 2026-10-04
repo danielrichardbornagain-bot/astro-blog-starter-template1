@@ -1,0 +1,255 @@
+---
+// The landing hero: a live, accessible version of the Custom PC Republic brand card.
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { BRAND, LINKS } from '../consts';
+---
+
+<section class="brand-card" aria-labelledby="brand-title">
+	<div class="top">
+		<Logo size={230} glow />
+		<div class="title">
+			<h1 id="brand-title" class="steel on-dark">Custom PC Republic</h1>
+			<hr class="glow-rule" />
+			<p class="tagline">{BRAND.tagline}</p>
+		</div>
+	</div>
+
+	<div class="middle">
+		<ul class="routes">
+			<li>
+				<a href="/services#home">
+					<span class="ring"><Icon name="globe" /></span>
+					<span><strong>For individuals &amp; homes</strong><em class="v">B2C support</em>Help desk, repairs, hardening and secure email for you and your family.</span>
+				</a>
+			</li>
+			<li>
+				<a href="/services#business">
+					<span class="ring"><Icon name="briefcase" /></span>
+					<span><strong>For businesses &amp; organisations</strong><em class="b">B2B service offering</em>Tailored IT solutions, managed services and cloud roadmaps.</span>
+				</a>
+			</li>
+			<li>
+				<a href="/shop">
+					<span class="ring"><Icon name="laptop" /></span>
+					<span><strong>Custom PCs</strong><em class="v">Still available</em>Hand-built computers for work and play, from our shop.</span>
+				</a>
+			</li>
+		</ul>
+		<div class="divider" aria-hidden="true"></div>
+		<div class="mission">
+			<div class="flow" aria-hidden="true">
+				<span class="fi v"><Icon name="people" size={44} /></span><span class="chev">›</span>
+				<span class="fi v"><Icon name="gear" size={44} /></span><span class="chev b">›</span>
+				<span class="fi b"><Icon name="chart" size={44} /></span>
+			</div>
+			<p>
+				Master expertise in <span class="v">knowing</span> your technology, <span class="b">supporting</span> it, then
+				<span class="v">improving</span> it — with as much <span class="b">synergy</span> as possible for your workforce and
+				for your <span class="v">business</span>.
+			</p>
+			<p>
+				We take the <span class="b">tech jargon</span> out of your tech. We improve technology
+				<span class="b">efficiencies</span> and <span class="v">innovations</span> as we do it.
+			</p>
+		</div>
+	</div>
+
+	<div class="bottom">
+		<span class="item"><span class="ring"><Icon name="check" /></span><span class="steel on-dark">Simplify</span></span>
+		<span class="sep" aria-hidden="true"></span>
+		<span class="item"><span class="ring"><Icon name="share" /></span><span class="steel on-dark">Integrate</span></span>
+		<span class="sep" aria-hidden="true"></span>
+		<span class="item"><span class="ring blue"><Icon name="gear" /></span><span class="steel on-dark">Automate</span></span>
+	</div>
+
+	<div class="actions">
+		<a class="btn btn-primary" href="/contact">Get in touch</a>
+		<a class="btn ghost" href="/services">Explore services</a>
+		<a class="btn ghost" href={LINKS.shop} target="_blank" rel="noopener">Shop custom PCs ↗</a>
+	</div>
+</section>
+
+<style>
+	/* Always dark — this is the brand card. */
+	.brand-card {
+		--v: #a497ff;
+		--b: #5cb4ff;
+		position: relative;
+		margin-top: 0.5rem;
+		padding: clamp(1.25rem, 3vw, 2.5rem);
+		border-radius: 24px;
+		color: #e4e1f2;
+		background:
+			radial-gradient(600px 360px at 12% 18%, rgba(124, 108, 255, 0.28), transparent 65%),
+			radial-gradient(700px 400px at 95% 10%, rgba(59, 166, 255, 0.16), transparent 65%),
+			repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.022) 0 2px, transparent 2px 4px),
+			repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.35) 0 2px, transparent 2px 4px),
+			#09080f;
+		border: 1px solid #2a2640;
+		box-shadow: 0 30px 80px -40px rgba(124, 108, 255, 0.6);
+		overflow: hidden;
+	}
+	.top {
+		display: flex;
+		align-items: center;
+		gap: clamp(1rem, 3vw, 2.5rem);
+	}
+	.title {
+		flex: 1;
+		min-width: 0;
+		text-align: center;
+	}
+	h1 {
+		font-size: clamp(2.2rem, 6.2vw, 5rem);
+		line-height: 1;
+		margin: 0;
+		padding-right: 0.1em;
+	}
+	.tagline {
+		font-style: italic;
+		font-size: clamp(1.05rem, 2vw, 1.45rem);
+		line-height: 1.5;
+		color: #e4e1f2;
+		margin: 0 auto;
+		max-width: 34ch;
+	}
+	.middle {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1.1fr);
+		gap: clamp(1rem, 3vw, 2.5rem);
+		margin-top: 2rem;
+		align-items: center;
+	}
+	.divider {
+		align-self: stretch;
+		background: #3a3552;
+	}
+	.routes {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 0.6rem;
+	}
+	.routes a {
+		display: flex;
+		gap: 1rem;
+		align-items: center;
+		padding: 0.6rem;
+		border-radius: 14px;
+		text-decoration: none;
+		color: #c9c5da;
+		font-size: 0.95rem;
+		line-height: 1.45;
+	}
+	.routes a:hover {
+		background: rgba(124, 108, 255, 0.1);
+	}
+	.routes strong {
+		display: block;
+		color: #fff;
+		font-size: 1.1rem;
+		font-weight: 600;
+	}
+	.routes em {
+		display: block;
+		font-style: normal;
+		font-size: 0.88rem;
+		margin-bottom: 0.15rem;
+	}
+	.ring {
+		color: #e4e1f2;
+	}
+	.ring.blue {
+		border-color: #3ba6ff;
+		box-shadow: 0 0 14px rgba(59, 166, 255, 0.45);
+	}
+	.mission {
+		font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+		line-height: 1.6;
+		font-style: italic;
+	}
+	.mission p {
+		margin: 0 0 0.8rem;
+		color: #e4e1f2;
+	}
+	.flow {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+	.fi.v { color: #8f82ff; }
+	.fi.b { color: #3ba6ff; }
+	.chev {
+		font-size: 2rem;
+		color: #8f82ff;
+	}
+	.chev.b { color: #3ba6ff; }
+	.v { color: var(--v); }
+	.b { color: var(--b); }
+	.bottom {
+		margin-top: 1.75rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid transparent;
+		border-image: linear-gradient(90deg, transparent, #7c6cff 25%, #3ba6ff 75%, transparent) 1;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+	.item {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.9rem;
+		font-size: clamp(1.1rem, 2.3vw, 1.7rem);
+		letter-spacing: 0.08em;
+	}
+	.item .steel {
+		font-style: normal;
+	}
+	.sep {
+		width: 1px;
+		height: 44px;
+		background: #3a3552;
+	}
+	.actions {
+		display: flex;
+		justify-content: center;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+		margin-top: 1.75rem;
+	}
+	.ghost {
+		background: rgba(255, 255, 255, 0.05);
+		border-color: #3a3552;
+		color: #eceaf6;
+	}
+	.ghost:hover {
+		color: #fff;
+	}
+	@media (max-width: 860px) {
+		.top {
+			flex-direction: column;
+		}
+		.top :global(img) {
+			width: 150px;
+			height: 150px;
+		}
+		.middle {
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.divider {
+			height: 1px;
+		}
+		.sep {
+			display: none;
+		}
+		.bottom {
+			justify-content: center;
+		}
+	}
+</style>

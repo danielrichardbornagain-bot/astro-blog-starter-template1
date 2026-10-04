@@ -1,20 +1,36 @@
 ---
 import Page from '../layouts/Page.astro';
-import NetworkList from '../components/NetworkList.astro';
-import { SERVICES, PACKAGES, BRAND, CONTACT, LINKS } from '../consts';
+import { SERVICES, ENGAGEMENTS, VENDORS } from '../consts';
+
+const home = [
+	'Slow, broken or infected computer? We fix it, remotely or on-site.',
+	'Windows hardening and safe settings, so problems don’t come back.',
+	'Keep work and play apart: we can set up Bazzite for gaming on its own machine, with Windows kept clean for work.',
+	'Secure email, backups, Wi-Fi and family devices.',
+	'Custom PCs are still available from our shop.',
+];
+const business = [
+	'Help desk for teams of any size, as break & fix or a proactive managed service.',
+	'Microsoft 365, Intune, Defender and Azure: set up, migrated and supported.',
+	'Cloud roadmaps and consulting, with a clear plan, budget and priorities.',
+	'Serverless hosting for websites, blogs, SaaS and internal apps.',
+	'Domain, DNS and email security against spoofing and phishing.',
+	'Vendor security solutions, resold and managed for you.',
+];
 ---
 
 <Page
 	title="Services"
-	description="Proactive projects, cloud engineering, web presence and DNS from Custom PC Republic."
-	eyebrow="cloud.custompcrepublic.com"
-	heading="Network & cloud"
-	lead="The other half of the Republic: serverless web on Cloudflare, plus the shop, builder, lobby, and lab as named subdomains. Hardware and delivery from one operator."
+	description="IT support, managed services, Microsoft 365, cloud roadmaps, serverless hosting and security from Custom PC Republic."
+	eyebrow="Services"
+	heading="Technology support that just works."
+	lead="From a single laptop to a whole company: we support it, secure it and improve it. Pick a once-off fix, a consultation or a managed contract."
 >
-	<div class="grid2">
+	<div class="grid3">
 		{
 			SERVICES.map((s) => (
-				<div class="card">
+				<div class="card svc">
+					<span class="ic">{s.icon}</span>
 					<h3>{s.title}</h3>
 					<p>{s.body}</p>
 				</div>
@@ -22,95 +38,132 @@ import { SERVICES, PACKAGES, BRAND, CONTACT, LINKS } from '../consts';
 		}
 	</div>
 
-	<div class="section-head"><h2>Packages</h2></div>
+	<div class="audiences">
+		<section id="home" class="card aud">
+			<span class="eyebrow">For individuals &amp; homes</span>
+			<h2>Your tech, sorted.</h2>
+			<ul>{home.map((h) => <li>{h}</li>)}</ul>
+			<a class="btn btn-primary" href="/contact?topic=home">Get help at home</a>
+		</section>
+		<section id="business" class="card aud">
+			<span class="eyebrow">For businesses &amp; organisations</span>
+			<h2>IT that scales with you.</h2>
+			<ul>{business.map((h) => <li>{h}</li>)}</ul>
+			<a class="btn btn-primary" href="/contact?topic=business">Book a consultation</a>
+		</section>
+	</div>
+
+	<div class="section-head"><h2>Ways to work with us</h2></div>
 	<div class="grid3">
 		{
-			PACKAGES.map((p) => (
-				<div class="card pkg">
-					<span class="eyebrow">{p.tier}</span>
-					<h3>{p.price}</h3>
-					<p>{p.body}</p>
+			ENGAGEMENTS.map((e) => (
+				<div class="card">
+					<h3>{e.name} {e.tag && <span class="pill">{e.tag}</span>}</h3>
+					<p>{e.body}</p>
 				</div>
 			))
 		}
 	</div>
 
-	<div class="card sla">
-		<div>
-			<span class="eyebrow">Tech support</span>
-			<h3>{BRAND.pitch}</h3>
-			<p>
-				We take the <strong>tech jargon</strong> out of your tech, and improve <strong>efficiencies</strong> and
-				<strong>innovations</strong> as we do it.
-			</p>
-		</div>
-		<div class="actions">
-			<a class="btn btn-primary" href="/contact">Get in touch</a>
-			<a class="btn" href={LINKS.lobby} target="_blank" rel="noopener">Join the lobby ↗</a>
-		</div>
-	</div>
-
-	<div class="section-head"><h2>Subdomains</h2></div>
-	<NetworkList />
-	<p class="note">
-		Everything runs on Cloudflare's edge — mapping hosts is a DNS cutover, not a rewrite.
-		<a href={LINKS.cloud} target="_blank" rel="noopener">Existing cloud studio →</a> · <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+	<div class="section-head"><h2>Vendors we resell &amp; manage</h2></div>
+	<p class="lead" style="margin-top:-.5rem">
+		Specialist security works best when it comes from specialists. We choose, deploy and manage proven vendors for you.
 	</p>
+	<ul class="vendors">
+		{
+			VENDORS.map((v) => (
+				<li class="card">
+					<strong>{v.name}</strong>
+					<span>{v.role}</span>
+				</li>
+			))
+		}
+	</ul>
+
+	<div class="card note">
+		<h3>Prevention beats cure</h3>
+		<p>
+			Hardening your systems costs far less than cleaning up an infection, so we always start there. If something has
+			already been compromised (a PC, a network, a business or a cloud tenant), we’ll help you contain it, recover and
+			harden.
+		</p>
+		<p class="small">
+			<strong>Please note:</strong> Custom PC Republic is a support and solutions provider, not a cyber insurer, and we
+			don’t accept liability for security incidents. The vendor products we supply come with their own service levels
+			and warranties, and we can help you compare cyber-insurance options with a qualified broker.
+		</p>
+	</div>
 </Page>
 
 <style>
-	.grid2 {
-		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 1rem;
-	}
 	.grid3 {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 1rem;
 	}
 	.card h3 {
-		font-size: 1.25rem;
-		margin-bottom: 0.35rem;
+		font-size: 1.15rem;
+		margin: 0.4rem 0 0.35rem;
 	}
 	.card p {
 		margin: 0;
 		color: var(--muted);
 	}
-	.pkg h3 {
+	.svc .ic {
+		font-size: 1.5rem;
+	}
+	.audiences {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+		margin-top: 2.5rem;
+	}
+	.aud {
+		scroll-margin-top: 100px;
+	}
+	.aud h2 {
 		font-size: 1.6rem;
 	}
-	.pkg .eyebrow {
-		margin-bottom: 0.25rem;
-		color: var(--faint);
+	.aud ul {
+		padding-left: 1.2rem;
+		color: var(--text);
+		margin: 0 0 1.25rem;
 	}
-	.sla {
-		margin-top: 1.5rem;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		gap: 1.5rem;
-		flex-wrap: wrap;
+	.aud li {
+		margin-bottom: 0.45rem;
 	}
-	.sla > div:first-child {
-		max-width: 640px;
+	.aud li::marker {
+		color: var(--primary);
 	}
-	.sla h3 {
-		font-size: 1.3rem;
+	.vendors {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+		gap: 1rem;
 	}
-	.actions {
-		display: flex;
-		gap: 0.75rem;
-		flex-wrap: wrap;
+	.vendors strong {
+		display: block;
+		font-family: var(--font-display);
+		font-size: 1.2rem;
 	}
-	.note {
-		margin-top: 1.5rem;
+	.vendors span {
 		color: var(--muted);
 		font-size: 0.95rem;
 	}
-	@media (max-width: 760px) {
-		.grid2,
-		.grid3 {
+	.note {
+		margin-top: 2rem;
+	}
+	.note p + p {
+		margin-top: 0.8rem;
+	}
+	.small {
+		font-size: 0.9rem;
+	}
+	@media (max-width: 860px) {
+		.grid3,
+		.audiences {
 			grid-template-columns: minmax(0, 1fr);
 		}
 	}

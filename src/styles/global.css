@@ -1,9 +1,8 @@
 /*
-  Custom PC Republic — blog theme.
-  Matches custompcrepublic.com: violet #7c6cff + blue #3ba6ff on deep ink,
-  Syne (display) · Outfit (body) · IBM Plex Mono (labels/code).
-  Light + dark themes via [data-theme] on <html> (see ThemeToggle.astro).
-  Full guide: /brand
+  Custom PC Republic — site theme, based on the brand card:
+  steel shield + chip, brushed-steel wordmark, violet #7c6cff + blue #3ba6ff glow on carbon.
+  Exo 2 (headings & wordmark) · Outfit (body) · IBM Plex Mono (labels/code).
+  Light + dark themes via [data-theme] on <html> (see ThemeToggle.astro). Guide: /brand
 */
 
 :root,
@@ -76,7 +75,9 @@
 }
 
 :root {
-	--font-display: "Syne", ui-sans-serif, system-ui, sans-serif;
+	--font-display: "Exo 2", ui-sans-serif, system-ui, sans-serif;
+	--steel: linear-gradient(176deg, #ffffff 0%, #d9dce3 22%, #8d929e 46%, #eef0f4 58%, #a7acb7 78%, #6c717d 100%);
+	--carbon-bg: #0a0914;
 	--font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
 	--font-mono: "IBM Plex Mono", ui-monospace, monospace;
 	--radius-sm: 8px;
@@ -102,7 +103,6 @@ body {
 		radial-gradient(1000px 520px at 85% -12%, var(--page-glow), transparent 65%),
 		radial-gradient(800px 480px at 0% 0%, var(--page-glow-2), transparent 60%),
 		var(--bg);
-	background-repeat: no-repeat;
 	color: var(--fg);
 	font-size: 18px;
 	line-height: 1.7;
@@ -324,4 +324,88 @@ hr {
 
 @media (prefers-reduced-motion: reduce) {
 	* { transition: none !important; }
+}
+
+/* Carbon weave (dark theme only), like the brand card */
+:root:not([data-theme='light']) body {
+	background:
+		radial-gradient(1000px 520px at 85% -12%, var(--page-glow), transparent 65%),
+		radial-gradient(800px 480px at 0% 0%, var(--page-glow-2), transparent 60%),
+		repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.014) 0 2px, transparent 2px 4px),
+		repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.3) 0 2px, transparent 2px 4px),
+		var(--bg);
+}
+
+/* Brushed-steel type, as in the logo wordmark */
+.steel {
+	font-family: var(--font-display);
+	font-weight: 900;
+	font-style: italic;
+	text-transform: uppercase;
+	letter-spacing: 0.01em;
+	background: var(--steel);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.6)) drop-shadow(0 0 14px rgba(91, 120, 255, 0.35));
+}
+:root[data-theme='light'] .steel:not(.on-dark) {
+	/* Gunmetal steel for light backgrounds */
+	background: linear-gradient(176deg, #6b7080 0%, #2a2d36 42%, #7a8090 58%, #3a3e4a 78%, #1f2129 100%);
+	-webkit-background-clip: text;
+	background-clip: text;
+	filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.8));
+}
+
+/* Glowing rule under hero lines (violet → blue, like the card) */
+.glow-rule {
+	display: block;
+	height: 2px;
+	background: linear-gradient(90deg, transparent, var(--primary-strong) 20%, #3ba6ff 80%, transparent);
+	box-shadow: 0 0 12px rgba(124, 108, 255, 0.7);
+	border: 0;
+	margin: 1rem 0;
+}
+
+/* Ring icon used for Simplify / Integrate / Automate */
+.ring {
+	display: inline-grid;
+	place-items: center;
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+	border: 2px solid var(--primary-strong);
+	box-shadow: 0 0 14px rgba(124, 108, 255, 0.45), inset 0 0 10px rgba(59, 166, 255, 0.25);
+	color: var(--fg);
+	flex: none;
+}
+
+/* Forms */
+label {
+	display: block;
+	font-weight: 600;
+	font-size: 0.92rem;
+	margin-bottom: 0.35rem;
+}
+input,
+select,
+textarea {
+	width: 100%;
+	font: inherit;
+	font-size: 1rem;
+	color: var(--fg);
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-md);
+	padding: 0.7em 0.85em;
+}
+textarea {
+	min-height: 160px;
+	resize: vertical;
+}
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 2px solid var(--primary);
+	outline-offset: 1px;
 }

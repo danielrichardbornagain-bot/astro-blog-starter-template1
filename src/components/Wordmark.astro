@@ -1,45 +1,28 @@
 ---
 import Logo from './Logo.astro';
-import { BRAND } from '../consts';
 
 interface Props {
-	size?: number; // mark size in px
-	sub?: string;
+	size?: number; // shield size in px
+	onDark?: boolean;
 }
-const { size = 38, sub = BRAND.subtitle } = Astro.props;
+const { size = 44, onDark = false } = Astro.props;
 ---
 
 <span class="lockup" style={`--m:${size}px`}>
 	<Logo size={size} />
-	<span class="words">
-		<span class="name">{BRAND.name}</span>
-		{sub && <span class="sub">{sub}</span>}
-	</span>
+	<span class:list={['steel', 'name', { 'on-dark': onDark }]}>Custom PC Republic</span>
 </span>
 
 <style>
 	.lockup {
 		display: inline-flex;
 		align-items: center;
-		gap: calc(var(--m) * 0.3);
-		color: var(--fg);
-	}
-	.words {
-		display: flex;
-		flex-direction: column;
-		line-height: 1.15;
+		gap: calc(var(--m) * 0.28);
 	}
 	.name {
-		font-family: var(--font-display);
-		font-weight: 700;
-		font-size: calc(var(--m) * 0.42);
-		letter-spacing: -0.01em;
-	}
-	.sub {
-		font-family: var(--font-mono);
-		font-size: calc(var(--m) * 0.25);
-		letter-spacing: 0.16em;
-		text-transform: uppercase;
-		color: var(--muted);
+		font-size: calc(var(--m) * 0.5);
+		line-height: 1;
+		white-space: nowrap;
+		padding-right: 0.15em; /* room for the italic overhang */
 	}
 </style>

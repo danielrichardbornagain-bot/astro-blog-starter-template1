@@ -1,16 +1,13 @@
-# Custom PC Republic Blog
+# Custom PC Republic
 
-**Plug in. Play secure.** — the official blog for [Custom PC Republic](https://custompcrepublic.com), served at **https://blog.custompcrepublic.com** on Cloudflare Workers.
+**Simplify · Integrate · Automate.** The Custom PC Republic site and blog (formerly Custom PC RSA, est. 2012), served at **https://blog.custompcrepublic.com** on Cloudflare Workers.
 
-- 🎨 Matches custompcrepublic.com (violet `#7C6CFF` / blue `#3BA6FF`; Syne, Outfit, IBM Plex Mono) with a light/dark toggle — see [`BRAND.md`](BRAND.md) and `/brand`
-- 🛒 Main-site content: `/shop`, `/services`, `/community`, `/watch`, `/contact` (data in `src/consts.ts`)
-- 📝 Blog posts in `src/content/blog/` (Markdown/MDX, optional `tags`)
-- 🏢 Company page at `/about`
-- 🌍 Featured open-source project page at `/zamesh` — contribute to [Zamesh](https://github.com/danielrichardbornagain-bot/zamesh)
-- 🔗 Site-wide brand data and links live in `src/consts.ts`
-- 🌐 `wrangler.json` binds the Worker to the `blog.custompcrepublic.com` custom domain on deploy
-
-Built from the Astro blog starter template (itself part of Zamesh).
+- 🛡️ Brand from the official card: steel shield + chip logo, brushed-steel wordmark, violet/blue glow on carbon. See [`BRAND.md`](BRAND.md) and `/brand`
+- 🌗 Light / dark theme toggle
+- 📄 Pages: home (brand card), `/services`, `/about` (journey + home/business views), `/blog`, `/shop`, `/contact`
+- ✉️ Contact form → `src/pages/api/contact.ts` → stored in the `CONTACT_MESSAGES` KV namespace (Cloudflare dashboard → Storage & Databases → KV)
+- ✍️ New posts: copy `src/content/blog/_TEMPLATE.md`; banner placeholder at `public/images/blog/placeholder.jpg`
+- 🔗 Site data (services, vendors, journey) lives in `src/consts.ts`
 
 ---
 
