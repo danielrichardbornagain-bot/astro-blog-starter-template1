@@ -1,61 +1,63 @@
 ---
 import Wordmark from './Wordmark.astro';
-import SocialIcons from './SocialIcons.astro';
-import { BRAND, CONTACT, LINKS, ZAMESH } from '../consts';
+import { BRAND, LINKS } from '../consts';
 const today = new Date();
 ---
 
 <footer>
 	<div class="inner">
 		<div class="col brand">
-			<Wordmark size={44} />
+			<Wordmark size={46} onDark />
 			<p>{BRAND.blurb}</p>
-			<div class="social-links"><SocialIcons /></div>
+			<p class="was">Formerly {BRAND.formerly} · since {BRAND.founded}</p>
 		</div>
 		<div class="col">
-			<span class="eyebrow">Subdomains</span>
-			<a href={LINKS.main}>www.custompcrepublic.com</a>
-			<a href={LINKS.shop}>shop.custompcrepublic.com</a>
-			<a href={LINKS.builder}>builder.custompcrepublic.com</a>
-			<a href={LINKS.cloud}>cloud.custompcrepublic.com</a>
-			<a href={LINKS.lab}>lab.custompcrepublic.com</a>
-			<a href={LINKS.forum}>forum.custompcrepublic.com</a>
-		</div>
-		<div class="col">
-			<span class="eyebrow">This site</span>
-			<a href="/blog">Blog</a>
-			<a href="/shop">Shop</a>
+			<span class="eyebrow">Company</span>
 			<a href="/services">Services</a>
-			<a href="/zamesh">Zamesh project</a>
+			<a href="/about">About &amp; journey</a>
+			<a href="/blog">Blog</a>
+			<a href="/contact">Contact us</a>
+		</div>
+		<div class="col">
+			<span class="eyebrow">More</span>
+			<a href="/shop">Custom PCs (shop)</a>
+			<a href={LINKS.main}>custompcrepublic.com</a>
+			<a href="/rss.xml">RSS feed</a>
 			<a href="/brand">Brand guidelines</a>
 		</div>
-		<div class="col">
-			<span class="eyebrow">Elsewhere</span>
-			<a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
-			<a href={LINKS.youtube}>YouTube</a>
-			<a href={ZAMESH.repo}>GitHub</a>
-			<a href={LINKS.forestOfPines}>Forest of Pines</a>
-			<a href={LINKS.links}>Full link tree</a>
-		</div>
 	</div>
-	<div class="legal">
-		&copy; {today.getFullYear()} {BRAND.name} · Johannesburg · Cloudflare-ready delivery
+	<div class="pillars">
+		{BRAND.pillars.map((p) => <span class="steel on-dark">{p.name}</span>)}
 	</div>
+	<div class="legal">&copy; {today.getFullYear()} {BRAND.name}. All rights reserved.</div>
 </footer>
 <style>
+	/* Dark carbon footer in both themes, mirroring the header. */
 	footer {
 		margin-top: 4rem;
 		padding: 3rem 1rem 2rem;
-		border-top: 1px solid var(--border);
-		background: var(--surface);
-		color: var(--muted);
+		background:
+			repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.02) 0 2px, transparent 2px 4px),
+			#0a0914;
+		color: #a4a0b8;
 		font-size: 0.95rem;
+		position: relative;
+	}
+	footer::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		height: 1px;
+		background: linear-gradient(90deg, transparent, #7c6cff 25%, #3ba6ff 75%, transparent);
+		box-shadow: 0 0 10px rgba(124, 108, 255, 0.8);
 	}
 	.inner {
 		max-width: var(--max);
 		margin: 0 auto;
 		display: grid;
-		grid-template-columns: 1.6fr 1.2fr 0.9fr 1.1fr;
+		grid-template-columns: 2fr 1fr 1fr;
 		gap: 2rem;
 	}
 	.col {
@@ -64,41 +66,53 @@ const today = new Date();
 		gap: 0.45rem;
 		min-width: 0;
 	}
+	.col .eyebrow {
+		color: #5cb4ff;
+	}
 	.col a {
-		color: var(--muted);
+		color: #b9b5cc;
 		text-decoration: none;
-		overflow-wrap: anywhere;
 	}
 	.col a:hover {
-		color: var(--fg);
+		color: #fff;
 	}
 	.brand p {
-		margin: 0.75rem 0;
-		max-width: 34ch;
+		margin: 0.9rem 0 0;
+		max-width: 46ch;
 	}
-	.social-links {
-		display: flex;
-		gap: 0.9rem;
+	.was {
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		color: #8b86a3;
 	}
-	.social-links :global(a) {
-		color: var(--muted);
+	.pillars {
+		max-width: var(--max);
+		margin: 2.5rem auto 0;
 		display: flex;
+		justify-content: center;
+		gap: 2.5rem;
+		flex-wrap: wrap;
+		font-size: 1.25rem;
 	}
 	.legal {
 		max-width: var(--max);
-		margin: 2.5rem auto 0;
+		margin: 1.5rem auto 0;
 		padding-top: 1.25rem;
-		border-top: 1px solid var(--border);
+		border-top: 1px solid #2a2640;
 		font-size: 0.85rem;
-		color: var(--faint);
+		color: #8b86a3;
 		text-align: center;
 	}
-	@media (max-width: 860px) {
+	@media (max-width: 760px) {
 		.inner {
 			grid-template-columns: 1fr 1fr;
 		}
 		.brand {
 			grid-column: 1 / -1;
+		}
+		.pillars {
+			gap: 1.25rem;
+			font-size: 1.05rem;
 		}
 	}
 </style>

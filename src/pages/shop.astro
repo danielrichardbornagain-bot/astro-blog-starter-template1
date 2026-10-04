@@ -1,69 +1,108 @@
 ---
 import Page from '../layouts/Page.astro';
-import ProductCard from '../components/ProductCard.astro';
-import { PRODUCTS, LINKS } from '../consts';
+import { LINKS } from '../consts';
 
-const cats = ['all', 'systems', 'laptops', 'components', 'network', 'lab'];
+const systems = [
+	{ name: 'Republic Pulse 1440', kind: 'Everyday performance', blurb: 'A balanced desktop for work, study and play. Hand-cabled and stress-tested before delivery.', image: '/products/hero-tower.jpg' },
+	{ name: 'Lt. Loki', kind: 'High performance', blurb: 'Plenty of power for creators, streamers and heavy multitasking.', image: '/products/battlestation.jpg' },
+	{ name: 'Republic Cube', kind: 'Small form factor', blurb: 'Desk-small and quiet, ideal for home offices and tight spaces.', image: '/products/cube-itx.jpg' },
+	{ name: 'Snowline Creator', kind: 'Workstation', blurb: 'A white dual-chamber build with strong cooling for editing and design work.', image: '/products/dual-chamber.jpg' },
+];
 ---
 
 <Page
 	title="Shop"
-	description="Prebuilts, laptops, GPUs and the edge kit we actually rack in Westdene."
-	eyebrow="shop.custompcrepublic.com"
-	heading="Floor and lab"
-	lead="Prebuilts, laptops, GPUs, and the edge kit we actually rack in Westdene. Prices in rand — order and check stock on the shop."
+	description="Custom-built computers are still available from the Custom PC Republic shop."
+	eyebrow="Shop"
+	heading="Custom PCs, still hand-built."
+	lead="Our roots are in custom computers, and we still build them. Browse current systems, pricing and stock on our shop."
 >
-	<div class="filters" role="group" aria-label="Filter catalogue">
-		{cats.map((c, i) => <button type="button" data-filter={c} aria-pressed={i === 0 ? 'true' : 'false'}>{c}</button>)}
+	<div slot="intro" class="intro-actions">
+		<a class="btn btn-primary" href={LINKS.shop} target="_blank" rel="noopener">Visit the shop ↗</a>
+		<a class="btn" href="/contact?topic=shop">Ask about a custom build</a>
 	</div>
-	<div class="grid" id="catalogue">{PRODUCTS.map((p) => <ProductCard product={p} />)}</div>
-	<p class="note">
-		Every floor unit is burned in overnight in Randburg. <a href={LINKS.shop} target="_blank" rel="noopener">Order on shop.custompcrepublic.com ↗</a>
-		· <a href={LINKS.builder} target="_blank" rel="noopener">Spec your own in the 3D builder ↗</a>
-	</p>
+
+	<div class="grid">
+		{
+			systems.map((s) => (
+				<a class="card sys" href={LINKS.shop} target="_blank" rel="noopener">
+					<img src={s.image} alt={s.name} loading="lazy" width="900" height="600" />
+					<div class="body">
+						<span class="kind">{s.kind}</span>
+						<h3>{s.name}</h3>
+						<p>{s.blurb}</p>
+					</div>
+				</a>
+			))
+		}
+	</div>
+
+	<div class="card tip">
+		<h3>💡 Our tip: keep work and play separate</h3>
+		<p>
+			If you game, consider a dedicated machine running <strong>Bazzite</strong> for play, and keep your
+			<strong>Windows PC hardened for work</strong> and banking. Ask us and we’ll set up both.
+		</p>
+	</div>
 </Page>
 
-<script>
-	const buttons = document.querySelectorAll<HTMLButtonElement>('.filters button');
-	const cards = document.querySelectorAll<HTMLElement>('#catalogue [data-category]');
-	buttons.forEach((b) =>
-		b.addEventListener('click', () => {
-			const f = b.dataset.filter;
-			buttons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-			cards.forEach((c) => (c.style.display = f === 'all' || c.dataset.category === f ? '' : 'none'));
-		}),
-	);
-</script>
-
 <style>
-	.filters {
+	.intro-actions {
 		display: flex;
+		gap: 0.75rem;
 		flex-wrap: wrap;
-		gap: 0.5rem;
-		margin-bottom: 1.5rem;
-	}
-	.filters button {
-		font: 500 0.88rem var(--font-sans);
-		text-transform: capitalize;
-		padding: 0.4em 0.95em;
-		border-radius: 999px;
-		border: 1px solid var(--border);
-		background: var(--panel);
-		color: var(--muted);
-		cursor: pointer;
-	}
-	.filters button[aria-pressed='true'] {
-		background: var(--primary-strong);
-		border-color: transparent;
-		color: #fff;
+		margin-top: 1rem;
 	}
 	.grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 		gap: 1rem;
 	}
-	.note {
-		margin-top: 2rem;
+	.sys {
+		padding: 0;
+		overflow: hidden;
+		text-decoration: none;
+		color: var(--fg);
+		display: flex;
+		flex-direction: column;
+	}
+	.sys:hover {
+		border-color: var(--primary);
+		color: var(--fg);
+	}
+	.sys img {
+		width: 100%;
+		aspect-ratio: 16 / 10;
+		object-fit: cover;
+		border-radius: 0;
+	}
+	.body {
+		padding: 1rem 1.15rem 1.2rem;
+	}
+	.kind {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--faint);
+	}
+	.sys h3 {
+		font-size: 1.2rem;
+		margin: 0.3rem 0;
+	}
+	.sys p {
+		margin: 0;
 		color: var(--muted);
+		font-size: 0.95rem;
+	}
+	.tip {
+		margin-top: 2rem;
+	}
+	.tip h3 {
+		font-size: 1.2rem;
+	}
+	.tip p {
+		margin: 0;
+		color: var(--text);
 	}
 </style>

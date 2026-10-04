@@ -4,7 +4,8 @@ import { z } from "astro/zod";
 
 const blog = defineCollection({
 	// Load Markdown and MDX files in the `src/content/blog/` directory.
-	loader: glob({ base: "./src/content/blog", pattern: "**/*.{md,mdx}" }),
+	// Files starting with "_" (e.g. _TEMPLATE.md) are ignored.
+	loader: glob({ base: "./src/content/blog", pattern: "**/[^_]*.{md,mdx}" }),
 	// Type-check frontmatter using a schema
 	schema: z.object({
 		title: z.string(),

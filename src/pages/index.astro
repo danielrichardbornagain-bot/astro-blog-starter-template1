@@ -2,78 +2,78 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import BrandCard from '../components/BrandCard.astro';
 import PostCard from '../components/PostCard.astro';
-import ProductCard from '../components/ProductCard.astro';
-import NetworkList from '../components/NetworkList.astro';
-import ZameshFeature from '../components/ZameshFeature.astro';
-import Logo from '../components/Logo.astro';
-import { SITE_TITLE, SITE_DESCRIPTION, BRAND, LINKS, PRODUCTS } from '../consts';
+import Icon from '../components/Icon.astro';
+import { SITE_TITLE, SITE_DESCRIPTION, SERVICES, ENGAGEMENTS } from '../consts';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.slice(0, 3);
-const floor = PRODUCTS.filter((p) => p.floor);
+
+const threats = [
+	{ icon: 'bolt', name: 'DDoS attacks', body: 'Floods of fake traffic are absorbed by Cloudflare’s global network before they reach you.' },
+	{ icon: 'mail', name: 'Phishing & spoofing', body: 'SPF, DKIM and DMARC stop criminals sending email that pretends to be you.' },
+	{ icon: 'lock', name: 'Cross-site scripting', body: 'A web application firewall filters malicious scripts aimed at your site and visitors.' },
+	{ icon: 'shield', name: 'Injection attacks', body: 'SQL and code-injection attempts are blocked at the edge, with managed rules kept up to date.' },
+] as const;
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={`${SITE_TITLE} — Simplify · Integrate · Automate`} description={SITE_DESCRIPTION} />
 		<style>
-			.hero {
+			.grid3 {
 				display: grid;
-				grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-				gap: 2rem;
-				align-items: center;
-				padding: 2.5rem 0 1rem;
-			}
-			.hero h1 {
-				font-size: clamp(2.6rem, 6.5vw, 4.4rem);
-				line-height: 1.02;
-				margin-bottom: 1rem;
-			}
-			.hero h1 span {
-				display: block;
-			}
-			.actions {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 0.75rem;
-				margin-top: 1.5rem;
-			}
-			.hero-mark {
-				display: grid;
-				place-items: center;
-				filter: drop-shadow(0 18px 50px rgba(124, 108, 255, 0.35));
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: 1rem;
 			}
 			.grid4 {
 				display: grid;
 				grid-template-columns: repeat(4, minmax(0, 1fr));
 				gap: 1rem;
 			}
-			.grid3 {
-				display: grid;
-				grid-template-columns: repeat(3, minmax(0, 1fr));
-				gap: 1rem;
-			}
-			.feature h3 {
-				font-size: 1.2rem;
+			.svc h3,
+			.threat h3 {
+				font-size: 1.15rem;
 				margin: 0.5rem 0 0.35rem;
 			}
-			.feature p {
+			.svc p,
+			.threat p {
 				margin: 0;
 				color: var(--muted);
 				font-size: 0.95rem;
 			}
-			.icon {
-				font-size: 1.3rem;
+			.svc .ic {
+				font-size: 1.5rem;
 			}
-			.pillars {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 0.5rem;
+			.threat .ic {
+				color: var(--primary);
+			}
+			.edge {
 				margin-top: 1rem;
+			}
+			.eng .tag {
+				float: right;
+			}
+			.eng h3 {
+				font-size: 1.2rem;
+			}
+			.eng p {
+				margin: 0;
+				color: var(--muted);
+			}
+			.cta {
+				margin-top: 3.5rem;
+				text-align: center;
+				padding: 2.5rem 1.5rem;
+			}
+			.cta p {
+				color: var(--muted);
+				max-width: 56ch;
+				margin: 0 auto 1.25rem;
 			}
 			@media (max-width: 960px) {
 				.grid4 {
@@ -81,15 +81,7 @@ const floor = PRODUCTS.filter((p) => p.floor);
 				}
 			}
 			@media (max-width: 760px) {
-				.hero,
-				.grid3 {
-					grid-template-columns: minmax(0, 1fr);
-				}
-				.hero-mark {
-					display: none;
-				}
-			}
-			@media (max-width: 520px) {
+				.grid3,
 				.grid4 {
 					grid-template-columns: minmax(0, 1fr);
 				}
@@ -99,62 +91,68 @@ const floor = PRODUCTS.filter((p) => p.floor);
 	<body>
 		<Header />
 		<main>
-			<section class="hero">
-				<div>
-					<span class="eyebrow">blog.custompcrepublic.com</span>
-					<h1><span>Plug in.</span><span class="gradient-text">Play secure.</span></h1>
-					<p class="lead">
-						Custom towers, a 3D builder with live FPS graphs, and <strong>Zero Trust</strong> staging — built in
-						Johannesburg for <strong>gamers and operators</strong>. This is the journal: build logs, rack diaries
-						and lab notes.
-					</p>
-					<div class="actions">
-						<a class="btn btn-primary" href="/blog">Read the blog →</a>
-						<a class="btn" href="/shop">Browse the shop</a>
-						<a class="btn" href={LINKS.builder} target="_blank" rel="noopener">Enter the builder ↗</a>
-					</div>
-					<div class="pillars">{BRAND.pillars.map((p) => <span class="pill">✓ {p}</span>)}</div>
-				</div>
-				<div class="hero-mark"><Logo size={280} variant="full" /></div>
-			</section>
+			<BrandCard />
 
 			<div class="section-head">
-				<h2>Latest posts</h2>
+				<h2>How we help</h2>
+				<a href="/services">All services →</a>
+			</div>
+			<div class="grid3">
+				{
+					SERVICES.slice(0, 6).map((s) => (
+						<div class="card svc">
+							<span class="ic">{s.icon}</span>
+							<h3>{s.title}</h3>
+							<p>{s.body}</p>
+						</div>
+					))
+				}
+			</div>
+
+			<div class="section-head">
+				<h2>Secure at the edge</h2>
+				<a href="/blog/edge-security-ddos-waf/">How it works →</a>
+			</div>
+			<p class="lead" style="margin-top:-.5rem">
+				Every website, blog, SaaS app and internal tool we host runs behind <strong>Cloudflare</strong>, with protection
+				switched on from day one.
+			</p>
+			<div class="grid4 edge">
+				{
+					threats.map((t) => (
+						<div class="card threat">
+							<span class="ic"><Icon name={t.icon} size={28} /></span>
+							<h3>{t.name}</h3>
+							<p>{t.body}</p>
+						</div>
+					))
+				}
+			</div>
+
+			<div class="section-head"><h2>Work with us your way</h2></div>
+			<div class="grid3">
+				{
+					ENGAGEMENTS.map((e) => (
+						<div class="card eng">
+							{e.tag && <span class="pill tag">{e.tag}</span>}
+							<h3>{e.name}</h3>
+							<p>{e.body}</p>
+						</div>
+					))
+				}
+			</div>
+
+			<div class="section-head">
+				<h2>From the blog</h2>
 				<a href="/blog">All posts →</a>
 			</div>
 			<div class="grid3">{posts.map((post) => <PostCard post={post} />)}</div>
 
-			<div class="section-head">
-				<h2>Floor machines</h2>
-				<a href="/shop">Full catalogue →</a>
+			<div class="card cta">
+				<h2>Let’s simplify your tech</h2>
+				<p>Tell us what you need: a quick fix, a cloud roadmap or a managed contract. We’ll reply with next steps.</p>
+				<a class="btn btn-primary" href="/contact">Contact us</a>
 			</div>
-			<div class="grid4">{floor.map((p) => <ProductCard product={p} />)}</div>
-
-			<div class="grid3" style="margin-top:1.5rem">
-				<div class="card feature">
-					<span class="icon">🖥️</span>
-					<h3>Custom + capture</h3>
-					<p>From the Pulse 1440 to the Lt. Loki stream box. Built, cabled, burned in.</p>
-				</div>
-				<div class="card feature">
-					<span class="icon">🛡️</span>
-					<h3>Zero Trust retail</h3>
-					<p>Identity, DNS shield, firmware lock. Same stack we run on the homelab rack.</p>
-				</div>
-				<div class="card feature">
-					<span class="icon">🌲</span>
-					<h3>Forest of Pines</h3>
-					<p>The side hustle: adaptive climbing in Randburg. Art and movement downstairs.</p>
-				</div>
-			</div>
-
-			<ZameshFeature />
-
-			<div class="section-head">
-				<h2>The Republic network</h2>
-			</div>
-			<p class="lead" style="margin-top:-.5rem">Subdomains and sister sites — cloud studio, lab, forum, lobby, and Forest of Pines.</p>
-			<NetworkList />
 		</main>
 		<Footer />
 	</body>

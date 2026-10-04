@@ -1,19 +1,25 @@
 ---
-// Shield mark. Full circuit shield at 56px and up; the simplified
-// 3-node shield below that (it stays legible down to 16px).
+// The steel shield + chip mark, cut from the official brand artwork.
 interface Props {
 	size?: number;
-	variant?: 'auto' | 'full' | 'simple';
+	glow?: boolean;
 }
-const { size = 32, variant = 'auto' } = Astro.props;
-const full = variant === 'full' || (variant === 'auto' && size >= 56);
+const { size = 40, glow = false } = Astro.props;
+const src = size > 96 ? '/brand/cpr-shield.webp' : '/brand/cpr-shield-96.webp';
 ---
 
 <img
-	src={full ? '/brand/cpr-mark.svg' : '/favicon.svg'}
+	src={src}
 	width={size}
 	height={size}
 	alt=""
 	aria-hidden="true"
+	class:list={['cpr-logo', { glow }]}
 	style="border-radius:0;display:block;flex:none"
 />
+
+<style>
+	.glow {
+		filter: drop-shadow(-10px 0 26px rgba(124, 108, 255, 0.55)) drop-shadow(10px 0 26px rgba(59, 166, 255, 0.45));
+	}
+</style>

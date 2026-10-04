@@ -1,107 +1,200 @@
 ---
 import Page from '../layouts/Page.astro';
-import { BRAND, CONTACT, LINKS } from '../consts';
+import { BRAND } from '../consts';
+
+const topics = [
+	['home', 'Help at home (individuals & families)'],
+	['business', 'Business IT / managed services'],
+	['support', 'Something is broken (break & fix)'],
+	['microsoft', 'Microsoft 365 & Azure'],
+	['hosting', 'Website, blog or app hosting'],
+	['security', 'Security, DNS & email protection'],
+	['shop', 'Custom PC from the shop'],
+	['other', 'Something else'],
+];
 ---
 
 <Page
-	title="Contact"
-	description="Email, services and the client lobby for Custom PC Republic."
-	eyebrow="Get in touch"
-	heading="Talk to the Republic"
-	lead={BRAND.pitch}
+	title="Contact us"
+	description="Send Custom PC Republic a message about IT support, Microsoft 365, cloud, hosting or security."
+	eyebrow="Contact us"
+	heading="Tell us what you need."
+	lead={BRAND.tagline}
 >
-	<div class="grid">
-		<div class="card">
-			<span class="eyebrow">Primary email</span>
-			<h3><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></h3>
-			<p>Quotes, support tickets and build questions. Daniel answers personally.</p>
-		</div>
-		<div class="card">
-			<span class="eyebrow">Live</span>
-			<h3><a href={LINKS.lobby} target="_blank" rel="noopener">Client lobby ↗</a></h3>
-			<p>Video waiting room for quotes, Zero Trust onboarding, and custom-build walkthroughs.</p>
-		</div>
-	</div>
+	<div class="wrap">
+		<form class="card" id="contact" method="post" action="/api/contact" novalidate>
+			<div id="status" role="status" aria-live="polite"></div>
+			<div class="row">
+				<div>
+					<label for="name">Your name *</label>
+					<input id="name" name="name" autocomplete="name" required maxlength="100" />
+				</div>
+				<div>
+					<label for="email">Email *</label>
+					<input id="email" name="email" type="email" autocomplete="email" required maxlength="200" />
+				</div>
+			</div>
+			<div class="row">
+				<div>
+					<label for="company">Company <span class="opt">(optional)</span></label>
+					<input id="company" name="company" autocomplete="organization" maxlength="120" />
+				</div>
+				<div>
+					<label for="topic">Topic *</label>
+					<select id="topic" name="topic" required>
+						{topics.map(([v, l]) => <option value={v}>{l}</option>)}
+					</select>
+				</div>
+			</div>
+			<div>
+				<label for="message">How can we help? *</label>
+				<textarea id="message" name="message" required maxlength="4000" placeholder="Tell us a little about your setup and what's going on."></textarea>
+			</div>
+			<div class="hp" aria-hidden="true">
+				<label for="website">Leave this empty</label>
+				<input id="website" name="website" tabindex="-1" autocomplete="off" />
+			</div>
+			<button class="btn btn-primary" type="submit">Send message</button>
+			<p class="fine">We use your details only to reply to you. No newsletters, no sharing.</p>
+		</form>
 
-	<div class="section-head"><h2>Where to go</h2></div>
-	<div class="grid3">
-		<a class="card route" href={LINKS.main} target="_blank" rel="noopener">
-			<span class="eyebrow">B2C · businesses &amp; individuals</span>
-			<h3>www.custompcrepublic.com</h3>
-			<p>Our main website for services, solutions, and technology support.</p>
-		</a>
-		<a class="card route" href="/services">
-			<span class="eyebrow">B2B service offering</span>
-			<h3>Managed IT &amp; cloud</h3>
-			<p>Tailored IT solutions and managed services for businesses and organisations.</p>
-		</a>
-		<a class="card route" href={CONTACT.portfolio} target="_blank" rel="noopener">
-			<span class="eyebrow">Portfolio · freelance</span>
-			<h3>danieljacobs.custompcrepublic.com</h3>
-			<p>Projects, experience, and freelance solutions delivered by Daniel Jacobs.</p>
-		</a>
-	</div>
-
-	<div class="card mission">
-		<p>
-			Master expertise in <strong class="v">knowing</strong> your technology, <strong class="b">supporting</strong> it, then
-			<strong class="v">improving</strong> it — with as much <strong class="b">synergy</strong> as possible for your workforce and
-			your <strong class="v">business</strong>.
-		</p>
-		<div class="pillars">{BRAND.pillars.map((p) => <span class="pill">✓ {p}</span>)}</div>
+		<aside class="side">
+			<div class="card">
+				<h3>What happens next</h3>
+				<ol>
+					<li>We read every message and reply by email.</li>
+					<li>For urgent breakages, tell us in the message, and we’ll prioritise it.</li>
+					<li>Businesses: we’ll suggest a quick consultation to scope your needs.</li>
+				</ol>
+			</div>
+			<div class="card">
+				<h3>Ways to work with us</h3>
+				<p><strong>Managed contract</strong>, <strong>consultation</strong> or <strong>break &amp; fix</strong>. <a href="/services">See services →</a></p>
+			</div>
+		</aside>
 	</div>
 </Page>
 
+<script>
+	const form = document.getElementById('contact') as HTMLFormElement;
+	const status = document.getElementById('status')!;
+	const params = new URLSearchParams(location.search);
+	const topic = params.get('topic');
+	if (topic) (form.elements.namedItem('topic') as HTMLSelectElement).value = topic;
+	function show(kind: 'ok' | 'err', text: string) {
+		status.className = kind;
+		status.textContent = text;
+	}
+	if (params.get('sent')) show('ok', 'Thanks! Your message has been sent. We’ll reply by email soon.');
+	if (params.get('error')) show('err', 'Sorry, something went wrong. Please check the form and try again.');
+
+	form.addEventListener('submit', async (e) => {
+		e.preventDefault();
+		if (!form.checkValidity()) {
+			form.reportValidity();
+			return;
+		}
+		const btn = form.querySelector('button')!;
+		btn.disabled = true;
+		btn.textContent = 'Sending…';
+		try {
+			const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { accept: 'application/json' } });
+			const data = await res.json().catch(() => ({ ok: false }));
+			if (res.ok && data.ok) {
+				form.reset();
+				show('ok', 'Thanks! Your message has been sent. We’ll reply by email soon.');
+			} else {
+				show('err', data.error ?? 'Sorry, something went wrong. Please try again.');
+			}
+		} catch {
+			show('err', 'Network error. Please check your connection and try again.');
+		} finally {
+			btn.disabled = false;
+			btn.textContent = 'Send message';
+		}
+	});
+</script>
+
 <style>
-	.grid {
+	.wrap {
+		display: grid;
+		grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+		gap: 1.25rem;
+		align-items: start;
+	}
+	form {
+		display: grid;
+		gap: 1rem;
+	}
+	.row {
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 1rem;
 	}
-	.grid3 {
-		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 1rem;
-	}
-	.card h3 {
-		font-size: 1.2rem;
-		overflow-wrap: anywhere;
-	}
-	.card p {
-		margin: 0;
+	.opt {
+		font-weight: 400;
 		color: var(--muted);
 	}
-	.route {
-		text-decoration: none;
-		color: var(--fg);
+	.hp {
+		position: absolute;
+		left: -9999px;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
 	}
-	.route:hover {
-		border-color: var(--primary);
-		color: var(--fg);
+	button {
+		justify-self: start;
+		border: 0;
+		cursor: pointer;
+		font-family: inherit;
 	}
-	.mission {
-		margin-top: 1.5rem;
+	button:disabled {
+		opacity: 0.7;
+		cursor: progress;
+	}
+	.fine {
+		margin: 0;
+		font-size: 0.85rem;
+		color: var(--muted);
+	}
+	#status:empty {
+		display: none;
+	}
+	#status {
+		padding: 0.8rem 1rem;
+		border-radius: var(--radius-md);
+		font-weight: 500;
+	}
+	#status.ok {
+		background: color-mix(in srgb, var(--ok) 15%, transparent);
+		border: 1px solid var(--ok);
+	}
+	#status.err {
+		background: color-mix(in srgb, var(--danger) 15%, transparent);
+		border: 1px solid var(--danger);
+	}
+	.side {
+		display: grid;
+		gap: 1rem;
+	}
+	.side h3 {
 		font-size: 1.15rem;
 	}
-	.mission p {
+	.side ol {
+		padding-left: 1.2rem;
+		margin: 0;
 		color: var(--text);
-		max-width: 62ch;
 	}
-	.v {
-		color: var(--primary);
+	.side li {
+		margin-bottom: 0.4rem;
 	}
-	.b {
-		color: var(--blue);
+	.side p {
+		margin: 0;
+		color: var(--text);
 	}
-	.pillars {
-		display: flex;
-		gap: 0.5rem;
-		margin-top: 1rem;
-		flex-wrap: wrap;
-	}
-	@media (max-width: 760px) {
-		.grid,
-		.grid3 {
+	@media (max-width: 860px) {
+		.wrap,
+		.row {
 			grid-template-columns: minmax(0, 1fr);
 		}
 	}

@@ -17,5 +17,15 @@
 			"pattern": "blog.custompcrepublic.com",
 			"custom_domain": true
 		}
+	],
+	"kv_namespaces": [
+		{
+			"binding": "CONTACT_MESSAGES",
+			"id": "2422730c00f9480ca78ea1f1a7d02588"
+		},
+		{
+			"binding": "SESSION",
+			"id": "92c6b3dc4a77435f847e72a105a4cca8"
+		}
 	]
 }

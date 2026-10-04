@@ -1,184 +1,244 @@
 ---
 import Page from '../layouts/Page.astro';
-import ZameshFeature from '../components/ZameshFeature.astro';
 import Logo from '../components/Logo.astro';
-import { BRAND, CONTACT, LINKS, PRODUCTS } from '../consts';
-
-const services = [
-	{ k: 'Build', title: 'Custom & prebuilt PCs', body: 'Hand-built towers, laptops and stream boxes — cabled, stress-tested and burned in overnight in Randburg.' },
-	{ k: 'Secure', title: 'Zero Trust staging', body: 'Identity, DNS shield and firmware lock for homes, homelabs and branches. Same stack we run on our own rack.' },
-	{ k: 'Support', title: 'Managed IT & support', body: 'Tailored IT solutions and emergency tech support with 99% SLA resolution for businesses and individuals.' },
-	{ k: 'Deliver', title: 'Cloud & web', body: 'Serverless sites on Cloudflare Pages and Workers, plus DNS hygiene, migrations and automation.' },
-];
-const lineup = PRODUCTS.filter((p) => p.floor);
+import { BRAND, JOURNEY, VENDORS, LINKS } from '../consts';
 ---
 
 <Page
 	title="About"
-	description={`${BRAND.name} — hand-built systems, Zero Trust staging and serverless delivery from ${BRAND.location}.`}
-	eyebrow="About the Republic"
-	heading="Gamers and operators on the same desk."
+	description={`${BRAND.name} (formerly ${BRAND.formerly}) has supported people and businesses since ${BRAND.founded}: IT support, Microsoft 365, cloud and security.`}
+	eyebrow={`Formerly ${BRAND.formerly} · since ${BRAND.founded}`}
+	heading="From custom PCs to custom solutions."
+	lead="We’ve always been Custom PC RSA. Today we’re Custom PC Republic: a public, solutions-first company helping people and businesses around the world get more from their technology."
 >
-	<div slot="intro" class="intro">
-		<p class="lead">
-			<strong>{BRAND.name}</strong> builds custom PCs, stages Zero Trust networks and ships serverless websites from
-			<strong>Westdene, Randburg</strong>. We take the tech jargon out of your tech — and improve efficiencies and
-			innovations as we do it.
-		</p>
-	</div>
+	<section class="journey" aria-labelledby="journey-h">
+		<h2 id="journey-h">Our journey</h2>
+		<ol>
+			{
+				JOURNEY.map((j) => (
+					<li>
+						<span class="year">{j.year}</span>
+						<div class="card">
+							<h3>{j.title}</h3>
+							<p>{j.body}</p>
+						</div>
+					</li>
+				))
+			}
+		</ol>
+	</section>
 
-	<div class="split">
-		<div class="card mission">
-			<span class="eyebrow">Our mission</span>
+	<section class="audience" aria-labelledby="aud-h">
+		<h2 id="aud-h">What this means for you</h2>
+		<div class="tabs" role="tablist" aria-label="Choose your audience">
+			<button role="tab" id="tab-home" aria-controls="panel-home" aria-selected="true">🏠 I’m looking for help at home</button>
+			<button role="tab" id="tab-biz" aria-controls="panel-biz" aria-selected="false" tabindex="-1">🏢 I make decisions for a business</button>
+		</div>
+
+		<div class="card panel" role="tabpanel" id="panel-home" aria-labelledby="tab-home">
+			<h3>Friendly tech help, without the jargon</h3>
 			<p>
-				Master expertise in <strong class="v">knowing</strong> your technology, <strong class="b">supporting</strong> it,
-				then <strong class="v">improving</strong> it — with as much <strong class="b">synergy</strong> as possible for
-				your workforce and your <strong class="v">business</strong>.
+				If your computer is slow, broken or acting strangely, or you think it has been hacked, we can help. Call us in
+				to <strong>fix what’s broken</strong> as a once-off, or <strong>book a consultation</strong> to set things up
+				properly.
 			</p>
-			<div class="pillars">{BRAND.pillars.map((p) => <span class="pill">✓ {p}</span>)}</div>
+			<ul>
+				<li><strong>Prevention first.</strong> We harden Windows with safe settings, updates and good protection, because stopping an infection is far easier than removing one.</li>
+				<li><strong>Keep work and play separate.</strong> We like setting up gaming on its own machine with <strong>Bazzite</strong> (a gaming-focused Linux), so your Windows PC for work and banking stays clean.</li>
+				<li><strong>Trusted protection.</strong> We install and look after security from respected vendors like <strong>Malwarebytes</strong>, rather than reinventing the wheel.</li>
+				<li><strong>Still love custom PCs?</strong> So do we. Hand-built computers are still available from our <a href={LINKS.shop}>shop</a>.</li>
+			</ul>
+			<a class="btn btn-primary" href="/contact?topic=home">Ask for help</a>
 		</div>
-		<div class="card facts">
-			<Logo size={84} variant="full" />
-			<dl>
-				<div><dt>Motto</dt><dd>{BRAND.tagline}</dd></div>
-				<div><dt>Energy</dt><dd>{BRAND.subtitle}</dd></div>
-				<div><dt>Based in</dt><dd>Westdene, Randburg</dd></div>
-				<div><dt>Email</dt><dd><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></dd></div>
-			</dl>
+
+		<div class="card panel" role="tabpanel" id="panel-biz" aria-labelledby="tab-biz" hidden>
+			<h3>A technology partner for small and medium enterprises</h3>
+			<p>
+				We support SMEs worldwide with <strong>Microsoft 365 and Azure support</strong>, <strong>cloud roadmaps</strong>
+				and a <strong>help desk for any size of company</strong>. We work as break-and-fix, as a consultant, or as your
+				<strong>proactive managed service provider</strong>.
+			</p>
+			<ul>
+				<li><strong>Specialist security, managed for you.</strong> After years of building Zero Trust stacks ourselves, we now resell and manage best-of-breed platforms: <strong>Huntress</strong> (managed EDR), <strong>Zscaler</strong> (secure access) and <strong>Malwarebytes</strong> (endpoint protection).</li>
+				<li><strong>Edge protection with Cloudflare.</strong> DDoS mitigation, web application firewall and routing and DNS security for your sites, SaaS and internal apps.</li>
+				<li><strong>Hardening and recovery.</strong> Hardened Windows baselines and policies, plus incident help for compromised devices, networks and cloud tenants.</li>
+				<li><strong>Clear commercial terms.</strong> We prefer managed contracts or scoped consultations. We aren’t a cyber insurer and don’t accept liability for breaches; the vendors we supply provide their own SLAs.</li>
+			</ul>
+			<a class="btn btn-primary" href="/contact?topic=business">Book a consultation</a>
 		</div>
-	</div>
+	</section>
 
-	<div class="section-head"><h2>What we do</h2></div>
-	<div class="grid4">
-		{
-			services.map((s) => (
-				<div class="card svc">
-					<span class="eyebrow">{s.k}</span>
-					<h3>{s.title}</h3>
-					<p>{s.body}</p>
-				</div>
-			))
-		}
-	</div>
+	<section class="vendors" aria-labelledby="ven-h">
+		<h2 id="ven-h">Partners &amp; vendors</h2>
+		<ul>{VENDORS.map((v) => <li><strong>{v.name}</strong><span>{v.role}</span></li>)}</ul>
+	</section>
 
-	<div class="section-head">
-		<h2>The lineup</h2>
-		<a href="/shop">Full catalogue →</a>
-	</div>
-	<ul class="lineup">
-		{lineup.map((l) => <li><strong>{l.name}</strong><span>{l.kind} · <span class="price">{l.price}</span></span></li>)}
-	</ul>
-
-	<ZameshFeature />
-
-	<div class="card sister">
-		<p><strong>Sister venture:</strong> Forest of Pines — Climbing Tree, adaptive climbing sessions in Randburg led by Daniel Jacobs.</p>
-		<a class="btn" href={LINKS.forestOfPines} target="_blank" rel="noopener">forestofpines.com ↗</a>
+	<div class="card sign">
+		<Logo size={88} />
+		<div>
+			<p class="steel">Custom PC Republic</p>
+			<p class="muted">{BRAND.tagline}</p>
+		</div>
 	</div>
 </Page>
 
-<style>
-	.split {
-		display: grid;
-		grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-		gap: 1rem;
+<script>
+	const tabs = [...document.querySelectorAll<HTMLButtonElement>('.tabs [role="tab"]')];
+	function select(tab: HTMLButtonElement) {
+		tabs.forEach((t) => {
+			const on = t === tab;
+			t.setAttribute('aria-selected', String(on));
+			t.tabIndex = on ? 0 : -1;
+			document.getElementById(t.getAttribute('aria-controls')!)!.hidden = !on;
+		});
 	}
-	.mission p {
+	tabs.forEach((t, i) => {
+		t.addEventListener('click', () => select(t));
+		t.addEventListener('keydown', (e) => {
+			if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+			const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+			select(next);
+			next.focus();
+		});
+	});
+	if (location.hash === '#business') select(tabs[1]);
+</script>
+
+<style>
+	section {
+		margin-top: 3rem;
+	}
+	h2 {
+		font-size: 1.9rem;
+	}
+	.journey ol {
+		list-style: none;
+		padding: 0;
+		margin: 1rem 0 0;
+		position: relative;
+	}
+	.journey ol::before {
+		content: '';
+		position: absolute;
+		left: 58px;
+		top: 0.5rem;
+		bottom: 0.5rem;
+		width: 2px;
+		background: linear-gradient(var(--primary-strong), #3ba6ff);
+		opacity: 0.6;
+	}
+	.journey li {
+		display: grid;
+		grid-template-columns: 100px minmax(0, 1fr);
+		gap: 1.25rem;
+		align-items: start;
+		margin-bottom: 1rem;
+	}
+	.year {
+		position: relative;
+		z-index: 1;
+		justify-self: center;
+		margin-top: 1.1rem;
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		font-weight: 500;
+		padding: 0.2em 0.6em;
+		border-radius: 999px;
+		background: var(--primary-strong);
+		color: #fff;
+	}
+	.journey h3 {
 		font-size: 1.2rem;
-		line-height: 1.6;
+		margin-bottom: 0.3rem;
+	}
+	.journey p {
+		margin: 0;
 		color: var(--text);
 	}
-	.v { color: var(--primary); }
-	.b { color: var(--blue); }
-	.pillars {
+	.tabs {
 		display: flex;
 		gap: 0.5rem;
 		flex-wrap: wrap;
+		margin: 1rem 0;
 	}
-	.facts {
+	.tabs button {
+		font: 600 0.98rem var(--font-sans);
+		padding: 0.65em 1.1em;
+		border-radius: 999px;
+		border: 1px solid var(--border);
+		background: var(--panel);
+		color: var(--muted);
+		cursor: pointer;
+	}
+	.tabs button[aria-selected='true'] {
+		background: var(--primary-strong);
+		border-color: transparent;
+		color: #fff;
+	}
+	.panel h3 {
+		font-size: 1.4rem;
+	}
+	.panel p,
+	.panel li {
+		color: var(--text);
+	}
+	.panel ul {
+		padding-left: 1.2rem;
+		margin: 0 0 1.25rem;
+	}
+	.panel li {
+		margin-bottom: 0.6rem;
+	}
+	.panel li::marker {
+		color: var(--primary);
+	}
+	.vendors ul {
+		list-style: none;
+		padding: 0;
+		margin: 1rem 0 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+		gap: 0.75rem;
+	}
+	.vendors li {
+		padding: 0.9rem 1.1rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius-md);
+		background: var(--panel);
+	}
+	.vendors strong {
+		display: block;
+		font-family: var(--font-display);
+		font-size: 1.1rem;
+	}
+	.vendors span {
+		color: var(--muted);
+		font-size: 0.92rem;
+	}
+	.sign {
+		margin-top: 3rem;
 		display: flex;
 		gap: 1.25rem;
 		align-items: center;
 	}
-	dl {
+	.sign .steel {
+		font-size: 1.6rem;
 		margin: 0;
-		display: grid;
-		gap: 0.55rem;
-		flex: 1;
-		min-width: 0;
 	}
-	dt {
-		font-family: var(--font-mono);
-		font-size: 0.7rem;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		color: var(--faint);
-	}
-	dd {
-		margin: 0;
-		font-weight: 600;
-		overflow-wrap: anywhere;
-	}
-	.grid4 {
-		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: 1rem;
-	}
-	.svc h3 {
-		font-size: 1.15rem;
-		margin-bottom: 0.35rem;
-	}
-	.svc p {
-		margin: 0;
+	.muted {
 		color: var(--muted);
-		font-size: 0.95rem;
+		margin: 0.3rem 0 0;
+		font-style: italic;
 	}
-	.lineup {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: 1rem;
-	}
-	.lineup li {
-		padding: 1rem 1.1rem;
-		border: 1px dashed var(--border);
-		border-radius: var(--radius-md);
-		background: var(--surface);
-	}
-	.lineup strong {
-		display: block;
-		font-family: var(--font-display);
-	}
-	.lineup span {
-		color: var(--muted);
-		font-size: 0.9rem;
-	}
-	.sister {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		flex-wrap: wrap;
-		gap: 1rem;
-	}
-	.sister p {
-		margin: 0;
-		color: var(--muted);
-	}
-	@media (max-width: 960px) {
-		.grid4,
-		.lineup {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
+	@media (max-width: 640px) {
+		.journey ol::before {
+			left: 34px;
 		}
-	}
-	@media (max-width: 760px) {
-		.split,
-		.grid4,
-		.lineup {
-			grid-template-columns: minmax(0, 1fr);
+		.journey li {
+			grid-template-columns: 70px minmax(0, 1fr);
+			gap: 0.75rem;
 		}
-		.facts {
+		.sign {
 			flex-direction: column;
 			align-items: flex-start;
 		}

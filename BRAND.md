@@ -1,41 +1,38 @@
-# Custom PC Republic — Brand guidelines (v3)
+# Custom PC Republic — Brand guidelines (v4)
 
 > Full visual guide: **https://blog.custompcrepublic.com/brand** (`src/pages/brand.astro`).
-> Tokens: `src/styles/global.css` (dark + light themes via `[data-theme]` on `<html>`).
+> Custom PC Republic was **Custom PC RSA** (est. 2012). Use the new name on everything new.
 
-The blog matches **custompcrepublic.com**: deep ink, violet + blue, Syne / Outfit / IBM Plex Mono. Neon is used sparingly; reading comfort comes first.
-
-## Logo — the shield chip
-- Steel shield (security) + CPU chip (hardware) + circuit traces to violet and blue nodes.
-- `public/brand/cpr-mark.svg` — full mark, use at **≥ 56px**
-- `public/favicon.svg` / `public/brand/cpr-favicon.svg` — simple 4-node mark for 16–55px
-- `public/apple-touch-icon.png`, social card `public/images/og-default.jpg`
-- Components: `<Logo size variant />`, `<Wordmark size sub />` (Syne name + "IT SYNERGY ENERGY" in Plex Mono)
-- Clear space ¼ of the mark height. No recolouring, stretching or heavy glow. The old "Custom PC RSA" script logo is retired.
+## Logo
+- **The steel shield + chip**, taken exactly from the official brand card — never redrawn or recoloured.
+- Files: `public/brand/cpr-shield.png` / `.webp` (master, transparent), `public/brand/favicon-{16,32,48,96,192}.png`,
+  `public/favicon.ico`, `public/apple-touch-icon.png`.
+- Wordmark: **CUSTOM PC REPUBLIC** in Exo 2, 900 italic, brushed-steel gradient (`.steel` class).
+- Components: `<Logo size glow />`, `<Wordmark size onDark />`.
+- Header and footer are always carbon (in light and dark themes) so the steel always shines.
 
 ## Colour
-| Role | Dark | Light | Token |
-| --- | --- | --- | --- |
-| Background | `#07060E` | `#F7F6FB` | `--bg` |
-| Panel | `#14111F` | `#FFFFFF` | `--panel` |
-| Border | `#2A2640` | `#E1DEEE` | `--border` |
-| Headings | `#ECEAF6` | `#16131F` | `--fg` |
-| Reading text | `#D9D6E8` | `#2E2A3D` | `--text` |
-| Muted | `#A4A0B8` | `#5C5772` | `--muted` |
-| Faint labels | `#8B86A3` | `#6A6582` | `--faint` |
-| Violet (text) | `#8F82FF` | `#5A48E0` | `--primary` |
-| Blue (text) | `#5CB4FF` | `#1A62B0` | `--blue` |
-| Button fill | `#6A5AF0` | `#6A5AF0` | `--primary-strong` |
+| Name | Hex | Use |
+| --- | --- | --- |
+| Shield Violet | `#7C6CFF` | glow, highlights (`#6A5AF0` for button fills with white text) |
+| Circuit Blue | `#3BA6FF` | glow, links |
+| Brushed Steel | `#C9CCD6` | logo, wordmark |
+| Carbon | `#09080F` | header, footer, brand card |
 
-Brand accents (logo, art): Republic Violet `#7C6CFF`, Edge Blue `#3BA6FF`, Brushed Steel `#C9CCD6`.
-All text colours meet WCAG AA in both themes.
+Light and dark theme tokens live in `src/styles/global.css`; all text colours meet WCAG AA in both.
 
 ## Type
 | Face | Job |
 | --- | --- |
-| **Syne** 600–800 | headings, the name |
-| **Outfit** 400/600 | body (18px, 1.7; posts 1.8, max 70ch) |
-| **IBM Plex Mono** 400–500 | labels, hosts, prices, code |
+| **Exo 2** | wordmark (900 italic, steel) and headings (700) |
+| **Outfit** | body text and UI |
+| **IBM Plex Mono** | labels, code |
 
 ## Voice
-**Plug in. Play secure.** — "Simplify technology with tech experts and 99% SLA resolution for your emergency tech support needs." Pillars: **Simplify · Integrate · Automate.**
+*"Simplify technology with tech experts and 99% SLA resolution for your emergency tech support needs."*
+Pillars: **Simplify · Integrate · Automate.** Plain English; two audiences (individuals, SME decision-makers);
+name the vendors we use (Cloudflare, Huntress, Zscaler, Malwarebytes, Microsoft); no over-claiming on security.
+
+## Blog banners
+1200×630 JPG in `public/images/blog/`. Until a custom banner exists, use `/images/blog/placeholder.jpg`.
+Start new posts from `src/content/blog/_TEMPLATE.md` (files beginning with `_` are not published).
