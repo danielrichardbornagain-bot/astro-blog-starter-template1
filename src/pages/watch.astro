@@ -1,0 +1,102 @@
+---
+import Page from '../layouts/Page.astro';
+import { LINKS } from '../consts';
+
+const videos = [
+	{ kind: 'Intro', title: 'Quick 5-min intro — Daniel J.' },
+	{ kind: 'Talk', title: 'Tier 3 M365 & Azure' },
+	{ kind: 'Live VOD', title: 'Hell Let Loose — Veteran 50v50 PVP' },
+	{ kind: 'Live VOD', title: 'Hell Let Loose — Lt. Loki' },
+	{ kind: 'Short', title: 'Restart as many times as you need to' },
+];
+---
+
+<Page
+	title="Watch"
+	description="Custom PC Republic on YouTube and TikTok — intros, Hell Let Loose nights and shorts."
+	eyebrow="YouTube + TikTok"
+	heading="Watch the Republic"
+	lead="Intro, Hell Let Loose nights, and shorts — plus vertical cuts of the rack, the Cube, and CityROCK sessions."
+>
+	<div class="channels">
+		<a class="card channel" href={LINKS.youtube} target="_blank" rel="noopener">
+			<span class="eyebrow">Channel</span>
+			<h3>▶ @customtechrepublic</h3>
+			<p>Intro, Hell Let Loose nights, talks and shorts.</p>
+			<span class="go">Open YouTube ↗</span>
+		</a>
+		<a class="card channel" href={LINKS.tiktok} target="_blank" rel="noopener">
+			<span class="eyebrow">TikTok</span>
+			<h3>♪ @custompcrepublic</h3>
+			<p>Vertical cuts of the rack, the Cube, and CityROCK sessions.</p>
+			<span class="go">Open TikTok ↗</span>
+		</a>
+	</div>
+
+	<div class="section-head"><h2>On the channel</h2></div>
+	<ul class="videos">
+		{
+			videos.map((v) => (
+				<li>
+					<a href={LINKS.youtube} target="_blank" rel="noopener">
+						<span class="pill">{v.kind}</span>
+						<span>{v.title}</span>
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</Page>
+
+<style>
+	.channels {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+	}
+	.channel {
+		text-decoration: none;
+		color: var(--fg);
+	}
+	.channel:hover {
+		border-color: var(--primary);
+		color: var(--fg);
+	}
+	.channel h3 {
+		font-size: 1.4rem;
+	}
+	.channel p {
+		color: var(--muted);
+	}
+	.go {
+		color: var(--blue);
+		font-weight: 600;
+	}
+	.videos {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		gap: 0.6rem;
+	}
+	.videos a {
+		display: flex;
+		align-items: center;
+		gap: 0.9rem;
+		padding: 0.85rem 1.1rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius-md);
+		background: var(--panel);
+		color: var(--fg);
+		text-decoration: none;
+	}
+	.videos a:hover {
+		border-color: var(--primary);
+		color: var(--fg);
+	}
+	@media (max-width: 760px) {
+		.channels {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+</style>

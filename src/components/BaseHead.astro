@@ -20,7 +20,17 @@ const { title, description, image = '/images/og-default.jpg' } = Astro.props;
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="generator" content={Astro.generator} />
 
-<meta name="theme-color" content="#04070f" />
+<meta name="theme-color" content="#07060e" />
+<meta name="color-scheme" content="dark light" />
+<script is:inline>
+	// Set theme before first paint: saved choice → OS preference → dark.
+	(function () {
+		var t;
+		try { t = localStorage.getItem('cpr-theme'); } catch (e) {}
+		if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+		document.documentElement.dataset.theme = t;
+	})();
+</script>
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="alternate" type="application/rss+xml" title="Custom PC Republic Blog" href="/rss.xml" />
 <link rel="sitemap" href="/sitemap-index.xml" />
@@ -30,7 +40,7 @@ const { title, description, image = '/images/og-default.jpg' } = Astro.props;
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
 	rel="stylesheet"
-	href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@600;700;800;900&family=Outfit:wght@400;500;600;700&display=swap"
+	href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap"
 />
 
 <!-- Canonical URL -->

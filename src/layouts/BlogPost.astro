@@ -7,7 +7,7 @@ import FormattedDate from '../components/FormattedDate.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, tags, minutes } = Astro.props as Props & { minutes?: number };
 ---
 
 <!doctype html>
@@ -18,20 +18,32 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
 			main {
 				padding-top: 2rem;
 			}
+			.hero-image {
+				max-width: 960px;
+				margin: 0 auto;
+			}
 			.hero-image img {
 				display: block;
 				width: 100%;
 				margin: 0 auto;
 				border-radius: var(--radius-lg);
 				border: 1px solid var(--border);
-				box-shadow: var(--glow);
+				box-shadow: var(--shadow);
 			}
 			.prose {
-				width: 760px;
+				width: var(--measure);
 				max-width: 100%;
 				margin: auto;
 				padding: 1em 0;
-				color: #d6d3e6;
+				color: var(--text);
+				font-size: 1.06em;
+				line-height: 1.8;
+			}
+			.prose :global(p) {
+				margin-bottom: 1.35em;
+			}
+			.prose :global(a) {
+				color: var(--primary);
 			}
 			.prose :global(h2),
 			.prose :global(h3) {
@@ -94,6 +106,7 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
 									</span>
 								)
 							}
+							{minutes && <span>· {minutes} min read</span>}
 							{tags.map((tag) => <span class="pill">#{tag}</span>)}
 						</div>
 						<h1>{title}</h1>

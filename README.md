@@ -2,7 +2,8 @@
 
 **Plug in. Play secure.** — the official blog for [Custom PC Republic](https://custompcrepublic.com), served at **https://blog.custompcrepublic.com** on Cloudflare Workers.
 
-- 🎨 "Neon Shield" brand system — see [`BRAND.md`](BRAND.md) and `/brand` (Volt `#9BEB2A` · Circuit Blue `#2E76F8` · Shield Violet `#7B3CF4` on Carbon `#04070F`; Orbitron, Chakra Petch, Outfit, JetBrains Mono)
+- 🎨 Matches custompcrepublic.com (violet `#7C6CFF` / blue `#3BA6FF`; Syne, Outfit, IBM Plex Mono) with a light/dark toggle — see [`BRAND.md`](BRAND.md) and `/brand`
+- 🛒 Main-site content: `/shop`, `/services`, `/community`, `/watch`, `/contact` (data in `src/consts.ts`)
 - 📝 Blog posts in `src/content/blog/` (Markdown/MDX, optional `tags`)
 - 🏢 Company page at `/about`
 - 🌍 Featured open-source project page at `/zamesh` — contribute to [Zamesh](https://github.com/danielrichardbornagain-bot/zamesh)

@@ -50,7 +50,8 @@ const { compact = false } = Astro.props;
 		margin: 3rem 0;
 		border-radius: 28px;
 		border: 1px solid var(--border);
-		background: linear-gradient(135deg, var(--panel), var(--bg));
+		background: var(--panel);
+		box-shadow: var(--shadow);
 		overflow: hidden;
 	}
 	.glow {
@@ -58,7 +59,7 @@ const { compact = false } = Astro.props;
 		inset: -40% -10% auto auto;
 		width: 520px;
 		height: 520px;
-		background: radial-gradient(circle, rgba(74, 222, 128, 0.18), transparent 60%);
+		background: radial-gradient(circle, rgba(124, 108, 255, 0.16), transparent 60%);
 		pointer-events: none;
 	}
 	.content {
@@ -68,11 +69,11 @@ const { compact = false } = Astro.props;
 		font-size: 2.2rem;
 	}
 	.lead {
-		color: #d6d3e6;
+		color: var(--text);
 	}
 	mark {
-		background: rgba(123, 60, 244, 0.28);
-		color: #fff;
+		background: color-mix(in srgb, var(--primary-strong) 22%, transparent);
+		color: var(--fg);
 		padding: 0 0.3em;
 		border-radius: 4px;
 		font-weight: 600;

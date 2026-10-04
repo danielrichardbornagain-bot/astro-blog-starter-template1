@@ -1,48 +1,41 @@
-# Custom PC Republic — Brand guidelines (v2.0 "Neon Shield")
+# Custom PC Republic — Brand guidelines (v3)
 
-> The full visual guide lives at **https://blog.custompcrepublic.com/brand** (`src/pages/brand.astro`).
-> Design tokens live in `src/styles/global.css`.
+> Full visual guide: **https://blog.custompcrepublic.com/brand** (`src/pages/brand.astro`).
+> Tokens: `src/styles/global.css` (dark + light themes via `[data-theme]` on `<html>`).
 
-## Idea
-| Ingredient | Taken from | Means |
-| --- | --- | --- |
-| 🛡️ **Shield** | steel shield + circuit traces | *Play secure* — the mark |
-| ⚡ **Spectrum** | volt → blue → violet neon, carbon weave | *Plug in* — energy |
-| 🌃 **Skyline** | wide wordmark, midnight navy, Hillbrow Tower | Made in Jo'burg |
+The blog matches **custompcrepublic.com**: deep ink, violet + blue, Syne / Outfit / IBM Plex Mono. Neon is used sparingly; reading comfort comes first.
 
-## Logo
-- Files: `public/brand/cpr-mark.svg` (full, use ≥ 56px), `public/brand/cpr-favicon.svg` / `public/favicon.svg` (simple, 16–55px), `public/apple-touch-icon.png`
-- Components: `<Logo size variant />`, `<Wordmark layout="horizontal|stacked" size tagline />`
-- Node order is fixed: **volt left · blue spine · violet right**
-- Clear space = ¼ of the mark height. Never recolour, stretch, rotate or outline it.
+## Logo — the shield chip
+- Steel shield (security) + CPU chip (hardware) + circuit traces to violet and blue nodes.
+- `public/brand/cpr-mark.svg` — full mark, use at **≥ 56px**
+- `public/favicon.svg` / `public/brand/cpr-favicon.svg` — simple 4-node mark for 16–55px
+- `public/apple-touch-icon.png`, social card `public/images/og-default.jpg`
+- Components: `<Logo size variant />`, `<Wordmark size sub />` (Syne name + "IT SYNERGY ENERGY" in Plex Mono)
+- Clear space ¼ of the mark height. No recolouring, stretching or heavy glow. The old "Custom PC RSA" script logo is retired.
 
 ## Colour
-| Name | Hex | Token | Use |
+| Role | Dark | Light | Token |
 | --- | --- | --- | --- |
-| Volt Green | `#9BEB2A` | `--volt` | primary buttons, eyebrows |
-| Circuit Blue | `#2E76F8` | `--circuit` | mark spine, quotes |
-| Shield Violet | `#7B3CF4` | `--violet` | mark nodes, gradient end |
-| Carbon | `#04070F` | `--carbon` | page background |
-| Jo'burg Midnight | `#041734` | `--midnight` | atmosphere |
-| Brushed Steel | `#C5CAD3` | `--steel` | rim, "CUSTOM PC" |
-| Skyline Blue | `#A8D4F5` | `--sky` | taglines |
-| Violet text | `#9A6BFF` | `--primary` | text-safe violet (5.7:1) |
-| Blue text | `#5B9BFF` | `--blue` | links (7.3:1) |
+| Background | `#07060E` | `#F7F6FB` | `--bg` |
+| Panel | `#14111F` | `#FFFFFF` | `--panel` |
+| Border | `#2A2640` | `#E1DEEE` | `--border` |
+| Headings | `#ECEAF6` | `#16131F` | `--fg` |
+| Reading text | `#D9D6E8` | `#2E2A3D` | `--text` |
+| Muted | `#A4A0B8` | `#5C5772` | `--muted` |
+| Faint labels | `#8B86A3` | `#6A6582` | `--faint` |
+| Violet (text) | `#8F82FF` | `#5A48E0` | `--primary` |
+| Blue (text) | `#5CB4FF` | `#1A62B0` | `--blue` |
+| Button fill | `#6A5AF0` | `#6A5AF0` | `--primary-strong` |
 
-Spectrum: `linear-gradient(90deg, #9BEB2A, #2E76F8 50%, #7B3CF4)` — wordmark, bars and accents only, never body text.
-Ratio: **60% dark · 30% steel/text · 10% neon.**
+Brand accents (logo, art): Republic Violet `#7C6CFF`, Edge Blue `#3BA6FF`, Brushed Steel `#C9CCD6`.
+All text colours meet WCAG AA in both themes.
 
 ## Type
 | Face | Job |
 | --- | --- |
-| **Orbitron** 800–900, uppercase | wordmark, rare display |
-| **Chakra Petch** 600–700 | headings, nav, buttons |
-| **Outfit** 400/600 | body |
-| **JetBrains Mono** 400–500 | eyebrows, labels, code |
-
-## UI
-- Chamfered corners (10px) on buttons; small radii (6–14px) elsewhere — no pills.
-- One volt primary button per view.
+| **Syne** 600–800 | headings, the name |
+| **Outfit** 400/600 | body (18px, 1.7; posts 1.8, max 70ch) |
+| **IBM Plex Mono** 400–500 | labels, hosts, prices, code |
 
 ## Voice
-**Plug in. Play secure.** — technical, friendly, security-first, proudly local.
+**Plug in. Play secure.** — "Simplify technology with tech experts and 99% SLA resolution for your emergency tech support needs." Pillars: **Simplify · Integrate · Automate.**
