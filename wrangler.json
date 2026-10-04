@@ -27,5 +27,13 @@
 			"binding": "SESSION",
 			"id": "92c6b3dc4a77435f847e72a105a4cca8"
 		}
-	]
+	],
+	"send_email": [
+		{
+			"name": "ALERT_EMAIL"
+		}
+	],
+	"vars": {
+		"ALERT_FROM": "alerts@custompcrepublic.com"
+	}
 }

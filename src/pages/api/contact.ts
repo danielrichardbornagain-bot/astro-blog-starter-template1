@@ -1,13 +1,15 @@
 // Contact form endpoint. Validates the submission and stores it in the
-// CONTACT_MESSAGES KV namespace (Cloudflare dashboard → Storage & Databases → KV).
+// CONTACT_MESSAGES KV namespace (Cloudflare dashboard → Storage & Databases → KV),
+// then emails an alert via Cloudflare Email Routing (see src/lib/alert-email.ts).
 import type { APIRoute } from 'astro';
+import { sendAlert, type AlertEnv, type ContactMessage } from '../../lib/alert-email';
 
 export const prerender = false;
 
 const TOPICS = ['home', 'business', 'support', 'hosting', 'security', 'microsoft', 'shop', 'other'];
 const LIMITS = { name: 100, email: 200, company: 120, message: 4000 };
 
-type Env = { CONTACT_MESSAGES?: KVNamespace };
+type Env = AlertEnv & { CONTACT_MESSAGES?: KVNamespace };
 
 function clean(v: FormDataEntryValue | null, max: number) {
 	return String(v ?? '').replace(/\u0000/g, '').trim().slice(0, max);
@@ -30,9 +32,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
 	// Honeypot: real people never fill this hidden field.
 	if (clean(form.get('website'), 200)) return reply(200, { ok: true });
 
-	const name = clean(form.get('name'), LIMITS.name);
+	const name = clean(form.get('name'), LIMITS.name).replace(/\s+/g, ' ');
 	const email = clean(form.get('email'), LIMITS.email);
-	const company = clean(form.get('company'), LIMITS.company);
+	const company = clean(form.get('company'), LIMITS.company).replace(/\s+/g, ' ');
 	const topic = clean(form.get('topic'), 20);
 	const message = clean(form.get('message'), LIMITS.message);
 
@@ -53,11 +55,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
 	const receivedAt = new Date().toISOString();
 	const key = `msg:${receivedAt}:${crypto.randomUUID()}`;
-	await kv.put(
-		key,
-		JSON.stringify({ name, email, company, topic, message, receivedAt, country: request.headers.get('cf-ipcountry') ?? '' }),
-		{ metadata: { name, email, topic, receivedAt } },
-	);
+	const record: ContactMessage = { name, email, company, topic, message, receivedAt, country: request.headers.get('cf-ipcountry') ?? '' };
+	await kv.put(key, JSON.stringify(record), { metadata: { name, email, topic, receivedAt } });
+
+	// Email alert (best effort — the message is already safely stored).
+	const alert = await sendAlert(env, record, key);
+	if (alert !== 'sent') console.warn(`Contact alert ${alert} for ${key}`);
 
 	return reply(200, { ok: true });
 };
